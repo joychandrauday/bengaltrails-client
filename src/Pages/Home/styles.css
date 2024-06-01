@@ -1,0 +1,62 @@
+.video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Ensure the video stays in the background */
+  overflow: hidden;
+}
+
+.video-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Prevent interaction with the video */
+}
+.custom-shape-divider-top-1717207853 {
+  position: absolute;
+  top: -10px !important;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+.html5-video-player .video-click-tracking, .html5-video-player .video-stream{
+  height: 650px !important;
+}
+  @media (max-width: 576px) { 
+    .slideheight{
+      height: 50vh !important;
+      display: flex;
+      align-items: center;
+    }
+    .slideheight p{
+      font-size: 12px !important;
+    }
+    .countryElement .genreName {
+      opacity: 1; /* Initially hide the element */
+      transition: opacity 0.3s ease; /* Add transition for opacity property */
+    }
+    
+    .swiper {
+      z-index: -1 !important;
+    }
+    
+    .countryElement {
+      backdrop-filter: brightness(0.3) !important; 
+    }
+  }
+  @media (max-width: 991.98px) {
+    .swiper {
+      z-index: -1 !important;
+    }
+    .slideheight{
+      height: 50vh !important ;
+      display: flex !important;
+      align-items: center;
+    }
+  
+  }
