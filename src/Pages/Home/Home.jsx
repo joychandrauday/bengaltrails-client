@@ -9,6 +9,7 @@ import { RiChatQuoteFill } from "react-icons/ri";
 import ReactPlayer from "react-player";
 import { Link } from "react-router-dom";
 import TourAndTravelGuide from "./HomeComponents/TourAndTravelGuide";
+import TourTypesSection from "./HomeComponents/TourTypesSection";
 
 const Home = () => {
   const { user } = useContext(AuthContext);
@@ -54,8 +55,14 @@ const Home = () => {
       <div className="tourismAndTravelGuide py-24">
         <TourAndTravelGuide></TourAndTravelGuide>
       </div>
-      <div className="py-12">
-        
+      <div className="py-24" style={{
+        'background':"linear-gradient(to bottom, rgb(0, 0, 0), rgba(57, 53, 53, 0.5)), url('https://i.ibb.co/zZ6r1xL/sabbir-rahaman-PAxutt-F3-Bv-Q-unsplash.jpg')",
+        'backgroundPosition':'center center',
+        'backgroundRepeat':'no-repeat',
+        'backgroundSize':'cover',
+        'backgroundAttachment':'fixed'
+      }}>
+        <TourTypesSection></TourTypesSection>
       </div>
     </div>
   );

@@ -53,3 +53,13 @@
     display: flex;
     
   }
+  .react-multi-carousel-item {
+    width: 300px !important;
+    margin: 0 auto;
+  }
+  .typeParent:hover .typeIcon{
+    width: 180px;
+  }
+  .typeParent:hover .typeText{
+    display: none;
+  }
