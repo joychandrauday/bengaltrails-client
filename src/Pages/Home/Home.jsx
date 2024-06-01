@@ -14,7 +14,7 @@ const Home = () => {
   const { user } = useContext(AuthContext);
 
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen">
       <Helmet>
         <title>Bengal Trails: the trails must be faced.</title>
       </Helmet>
@@ -53,6 +53,9 @@ const Home = () => {
       </div>
       <div className="tourismAndTravelGuide py-24">
         <TourAndTravelGuide></TourAndTravelGuide>
+      </div>
+      <div className="py-12">
+        
       </div>
     </div>
   );

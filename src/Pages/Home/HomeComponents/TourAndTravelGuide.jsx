@@ -7,6 +7,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import TabOverView from "./TabOverView";
 import TabPackages from "./TabPackages";
+import TourGuides from "./TourGuides";
 
 const TourAndTravelGuide = () => {
   return (
@@ -40,7 +41,7 @@ const TourAndTravelGuide = () => {
           <TabPackages></TabPackages>
         </TabPanel>
         <TabPanel>
-          <h2>Any content 3</h2>
+          <TourGuides></TourGuides>
         </TabPanel>
       </Tabs>
     </div>
