@@ -9,21 +9,21 @@ import { AwesomeButton } from "react-awesome-button";
 
 const auth = getAuth(app);
 const Header = () => {
-  const handleToggle = (e) => {
-    if (e.target.checked) {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-  };
-  const [theme, setTheme] = useState(
-    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
-  );
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-    const localTheme = localStorage.getItem("theme");
-    document.querySelector("html").setAttribute("data-theme", localTheme);
-  }, [theme]);
+  // const handleToggle = (e) => {
+  //   if (e.target.checked) {
+  //     setTheme("dark");
+  //   } else {
+  //     setTheme("light");
+  //   }
+  // };
+  // const [theme, setTheme] = useState(
+  //   localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
+  // );
+  // useEffect(() => {
+  //   localStorage.setItem("theme", theme);
+  //   const localTheme = localStorage.getItem("theme");
+  //   document.querySelector("html").setAttribute("data-theme", localTheme);
+  // }, [theme]);
   const { user, logOut } = useContext(AuthContext);
   const navLinks = (
     <>
@@ -46,7 +46,7 @@ const Header = () => {
   );
   return (
     <div className="bg-gradient-to-b from-black w-full ">
-      <div className="navbar container mx-auto py-4">
+      <div className="navbar container pb-12 pt-8 mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -66,13 +66,16 @@ const Header = () => {
               </svg>
             </div>
             <ul
-            tabIndex={50}
+              tabIndex={50}
               className="menu  menu-sm dropdown-content mt-4 p-2 shadow bg-base-100 rounded-box w-44"
             >
               {navLinks}
             </ul>
           </div>
-          <NavLink to={"/"} className="logo relative text-xl flex items-center">
+          <NavLink
+            to={"/"}
+            className="logo p-0 h-0 relative text-xl flex items-center"
+          >
             <img
               src="https://i.ibb.co/94N1vNb/Blue-Yellow-Simple-Tour-And-Travel-Logo-3-1.png"
               alt=""
@@ -80,33 +83,19 @@ const Header = () => {
             />
           </NavLink>
         </div>
-        <div className="navbar-center hidden lg:flex">
+        
+        <div className="navbar justify-end">
           <ul className="menu menu-horizontal px-1">{navLinks}</ul>
-        </div>
-        <div className="navbar-end">
-          <label className="swap swap-rotate pr-8">
-            {/* this hidden checkbox controls the state */}
-            <input type="checkbox" onChange={handleToggle} />
-
-            {/* sun icon */}
-            <svg
-              className="swap-on fill-current w-7 h-7"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
+          {user ? (
+            <button
+              className="btn rounded-none lg:hidden"
+              onClick={() => logOut(auth)}
             >
-              <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
-            </svg>
-
-            {/* moon icon */}
-            <svg
-              className="swap-off fill-current w-7 h-7"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
-            </svg>
-          </label>
-          {user?<button className="btn rounded-none lg:hidden" onClick={() => logOut(auth)}>Log Out</button>:''}
+              Log Out
+            </button>
+          ) : (
+            ""
+          )}
           {user ? (
             <div className="dropdown dropdown-hover dropdown-end relative">
               <div tabIndex={0} role="button" className="m-1">
@@ -115,7 +104,7 @@ const Header = () => {
                     alt="Tailwind CSS Navbar component"
                     src={user.photoURL}
                   />
-                  {librarian? (
+                  {librarian ? (
                     <div className="badge badge-warning absolute -top-5 lg:-top-2 lg:rotate-12 lg:skew-x-3 lg:skew-y-3 capitalize font-bold lg:left-0 -left-8">
                       librarian
                     </div>
@@ -136,13 +125,13 @@ const Header = () => {
             <div className="lg:relative absolute lg:right-0 right-16">
               <Link
                 to={"/sign-up"}
-                className="lg:btn p-3 lg:p-0 lg:bg-[#00008b] lg:text-white lg:rounded-full lg:px-7 hover:bg-blue-950"
+                className="lg:btn p-3 lg:p-0 lg:bg-primary lg:text-white lg:rounded-none lg:px-7 border-none hover:bg-primary hover:text-gray-300"
               >
                 Sign Up
               </Link>
               <Link
                 to={"/sign-in"}
-                className="lg:btn p-3 lg:p-0 lg:bg-transparent lg:border-[#00008b] lg:text-[#00008b] lg:rounded-full lg:px-7 hover:bg-blue-950 hover:text-white"
+                className="lg:btn p-3 lg:p-0 lg:bg-transparent lg:border-primary lg:text-white hover:border-primary lg:rounded-none lg:px-7 hover:bg-primary hover:text-white"
               >
                 Sign In
               </Link>

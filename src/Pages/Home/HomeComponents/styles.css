@@ -63,3 +63,10 @@
   .typeParent:hover .typeText{
     display: none;
   }
+  .react-tabs__tab--selected{
+    background-color: #D32F2F;
+    color: white;
+  }
+  .react-tabs__tab-list{
+    border-color: #D32F2F;
+  }
