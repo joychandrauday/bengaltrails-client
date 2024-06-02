@@ -20,7 +20,7 @@ export default {
         lato:'"Lato", sans-serif',
       },
       backgroundImage: {
-        'basic-bg': "url('https://i.ibb.co/3N4vv7G/pexels-therato-19275547.jpg')",
+        'basic-bg': "url('https://i.ibb.co/pvyfDK8/arijit-m-0-F4-Ew-Nk-G5-To-unsplash.jpg')",
         'signIn': "url('https://i.ibb.co/f0gTBDS/pexels-bri-schneiter-28802-346529.jpg')",
         'newsletter': "url('https://i.ibb.co/bL2xbYT/pexels-leo-willians-789496294-19365740.jpg')",
       }

@@ -97,27 +97,33 @@ const Header = () => {
             ""
           )}
           {user ? (
-            <div className="dropdown dropdown-hover dropdown-end relative">
+            <div className="dropdown dropdown-hover dropdown-end relative ml-4">
               <div tabIndex={0} role="button" className="m-1">
                 <div className="w-12 relative">
                   <img
                     alt="Tailwind CSS Navbar component"
                     src={user.photoURL}
                   />
-                  {librarian ? (
-                    <div className="badge badge-warning absolute -top-5 lg:-top-2 lg:rotate-12 lg:skew-x-3 lg:skew-y-3 capitalize font-bold lg:left-0 -left-8">
-                      librarian
-                    </div>
-                  ) : // Show nothing if the user is not a librarian
-                  null}
                 </div>
               </div>
               <ul
                 tabIndex={99999}
-                className="dropdown-content z-[99999] menu p-2 shadow bg-base-100 absolute w-32 rounded-none right-12 hidden lg:block"
+                className="dropdown-content z-[99999] menu p-2 shadow absolute w-auto rounded-none right-12 hidden lg:block bg-primary"
               >
                 <li>
-                  <a onClick={() => logOut(auth)}>Log Out</a>
+                  <Link to={'/dashboard'}>Dashboard</Link>
+                </li>
+                <li>
+                  <Link to={'/my-offers'}>My Offers</Link>
+                </li>
+                <li>
+                  <h1 className="text-gray-300">{user.displayName}</h1>
+                </li>
+                <li>
+                  <h1 className="text-gray-300">{user.email}</h1>
+                </li>
+                <li>
+                  <Link onClick={() => logOut(auth)}>Log Out</Link>
                 </li>
               </ul>
             </div>

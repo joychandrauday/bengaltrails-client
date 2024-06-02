@@ -10,6 +10,7 @@ import axios from "axios";
 import { AwesomeButton } from "react-awesome-button";
 
 import "react-awesome-button/dist/styles.css";
+import { BsGoogle } from "react-icons/bs";
 
 const SignIn = () => {
   const location = useLocation();
@@ -72,19 +73,6 @@ const SignIn = () => {
         });
       });
   };
-  const handleGitLogin = () => {
-    githubSignIn()
-      .then((res) => {
-        navigate(location?.state ? location.state : "/");
-      })
-      .catch((error) => {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong.",
-        });
-      });
-  };
   return (
     <div className="items-center ">
       <Helmet>
@@ -103,8 +91,8 @@ const SignIn = () => {
           </div>
         ) : (
           <div className="hero-content lg:w-2/5">
-            <div className="text-center lg:text-left w-full shadow-2xl bg-base-100 p-8 rounded">
-              <h1 className="text-2xl font-bold">Login now!</h1>
+            <div className="text-center lg:text-left w-full text-white p-8 rounded">
+              <h1 className="text-3xl font-bold text-center">Login now!</h1>
               <form className="" onSubmit={handleSignIn}>
                 <div className="form-control">
                   <label className="label">
@@ -114,7 +102,7 @@ const SignIn = () => {
                     type="email"
                     name="email"
                     placeholder="email"
-                    className="input input-bordered"
+                    className="input rounded-none "
                     required
                   />
                 </div>
@@ -126,43 +114,45 @@ const SignIn = () => {
                     type="password"
                     name="password"
                     placeholder="password"
-                    className="input input-bordered"
+                    className="input rounded-none "
                     required
                   />
                   <div className="flex justify-between items-center">
-                  <label className="label">
-                    <a href="#" className="label-text-alt link link-hover text-sm capitalize">
-                      Forgot password?
-                    </a>
-                  </label>
-                  <label className="label capitalize">
-                  dont have an account?
-                    <Link to={'/sign-up'} className="label-text-alt link link-hover text-sm capitalize font-bold">
-                      register
-                    </Link>
-                  </label>
+                    <label className="label">
+                      <a
+                        href="#"
+                        className="label-text-alt link link-hover text-sm text-white capitalize"
+                      >
+                        Forgot password?
+                      </a>
+                    </label>
+                    <label className="label capitalize">
+                      dont have an account?
+                      <Link
+                        to={"/sign-up"}
+                        className="label-text-alt link link-hover text-sm capitalize font-bold text-primary hover:text-white"
+                      >
+                        register
+                      </Link>
+                    </label>
                   </div>
                 </div>
                 <div className="form-control">
-                  <button className="btn btn-primary">Login</button>
+                  <button className="btn  bg-primary rounded-none border-none text-white">
+                    Login
+                  </button>
                 </div>
               </form>
               <div className="flex items-center justify-center pt-4 gap-3">
-                <h1 className="capitalize lg:text-sm text-[12px] font-bold">or, continue with: </h1>
-                <AwesomeButton
-                  size="small"
-                  type="primary"
-                  onPress={handleGoogleLogin}
-                >
-                  Google
-                </AwesomeButton>
-                <AwesomeButton
-                  size="small"
-                  type="primary"
-                  onPress={handleGitLogin}
-                >
-                  Github
-                </AwesomeButton>
+                <hr className="w-36 border-primary"></hr>
+                <h1 className="capitalize lg:text-sm text-[12px] text-center font-bold">
+                  or, continue with
+                </h1>
+                <hr className="w-36 border-primary"></hr>
+              </div>
+              <div className="flex items-center justify-center py-4">
+                <BsGoogle className="text-3xl cursor-pointer" onClick={handleGoogleLogin}></BsGoogle>
+
               </div>
             </div>
           </div>
