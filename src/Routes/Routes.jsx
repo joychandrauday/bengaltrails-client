@@ -10,6 +10,7 @@ import Home from '../Pages/Home/Home';
 import SignIn from '../Pages/Sign In/SignIn';
 import SignUp from '../Pages/SignUp/SignUp';
 import PrivateRoute from './../Private Route/PrivateRoute';
+import Blog from '../Pages/BlogPage/Blog';
 
 const router = createBrowserRouter([
     {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
         {
           path: "/",
           element: <Home></Home>
+        },
+        {
+          path: "/blog",
+          element: <Blog></Blog>
         },
         {
           path: "/sign-in",

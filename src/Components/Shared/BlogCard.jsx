@@ -10,9 +10,7 @@ const BlogCard = ({blog}) => {
         console.log(id);
     }
     const {_id, title, author, date, destination, featureImage, content, images, tags, excerpt, comments}=blog;
-    console.log(blog
-        
-    );
+  
   return (
     <div>
       <div
