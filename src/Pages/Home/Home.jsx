@@ -10,6 +10,7 @@ import ReactPlayer from "react-player";
 import { Link } from "react-router-dom";
 import TourAndTravelGuide from "./HomeComponents/TourAndTravelGuide";
 import TourTypesSection from "./HomeComponents/TourTypesSection";
+import TravelStoriesSection from "./HomeComponents/TravelStoriesSection";
 
 const Home = () => {
   const { user } = useContext(AuthContext);
@@ -63,6 +64,9 @@ const Home = () => {
         'backgroundAttachment':'fixed'
       }}>
         <TourTypesSection></TourTypesSection>
+      </div>
+      <div className="py-12">
+        <TravelStoriesSection></TravelStoriesSection>
       </div>
     </div>
   );
