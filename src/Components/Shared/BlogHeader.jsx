@@ -5,7 +5,7 @@ const BlogHeader = ({ bgImg, blogTitle,author,authorImg,date,comments}) => {
     const {name,image}=author
   return (
     <div
-      className="bg-primary pb-12  pt-32 h-72 flex items-center justify-center"
+      className="bg-primary pb-12  pt-32 h-96 flex items-center justify-center"
       style={{
         backgroundImage: `linear-gradient(rgba(57, 53, 53, 0.8), rgba(57, 53, 53, 0.8)),url(${bgImg})`,
         backgroundSize: "cover",

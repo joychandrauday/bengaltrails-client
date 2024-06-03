@@ -5,9 +5,10 @@ import { useQuery } from "@tanstack/react-query";
 import PageHeader from "../../Components/Shared/PageHeader";
 import BlogCard from "../../Components/Shared/BlogCard";
 
+
 const Blog = () => {
   const navigate = useNavigate();
-  const axiosSecure = useAxiosSecure();
+  const axiosSecure=useAxiosSecure()
   const {
     data: travelStories = [],
     isLoading,
