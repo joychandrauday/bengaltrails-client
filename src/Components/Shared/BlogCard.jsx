@@ -40,7 +40,7 @@ const BlogCard = ({blog}) => {
           </div>
           <div className="flex items-start justify-between">
             <div className="destination ">
-                <h1 className="flex items-center gap-2 font-extrabold"><FaUserPen></FaUserPen> {author}</h1>
+                <h1 className="flex items-center gap-2 font-extrabold"><FaUserPen></FaUserPen> {author?.name}</h1>
             </div>
             <div className="destination ">
                 <h1 className="font-bold items-center">{tags.map((tag)=><div className="badge badge-sm badge-outline m-[2px]">{tag}</div>)}</h1>

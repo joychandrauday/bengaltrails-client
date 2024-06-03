@@ -2,6 +2,8 @@ import React from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import PageHeader from "../../Components/Shared/PageHeader";
+import BlogHeader from "../../Components/Shared/BlogHeader";
 
 const SingleBlogPage = () => {
   const { id } = useParams(); // Destructure the id from useParams
@@ -30,11 +32,18 @@ const SingleBlogPage = () => {
   if (isError) {
     return <div>Error fetching story data</div>;
   }
-
-  console.log(story);
-
+  const {name,image}=story.author;
+  const commentNum=story.comments.length;
   return (
-    <div className="container mx-auto p-4">
+    <div className="">
+      <BlogHeader
+        blogTitle={`${story?.title}`}
+        bgImg={`${story.featureImage}`}
+        author={`${name}`}
+        authorImg={`${image}`}
+        date={`${story.date}`}
+        comments={`${commentNum}`}
+      ></BlogHeader>
       <div className="max-w-3xl mx-auto">
         <img
           src={story.featureImage}
@@ -42,16 +51,16 @@ const SingleBlogPage = () => {
           className="w-full h-auto rounded-lg mb-4"
         />
         <h1 className="text-3xl font-bold mb-4">{story.title}</h1>
-        <p className="text-lg mb-4">by {story.author} on {story.date}</p>
-        <div className="prose max-w-none">
-          {story.content}
-        </div>
+        <div className="prose max-w-none">{story.content}</div>
         <div className="mt-6">
           <h2 className="text-2xl font-semibold mb-2">Comments</h2>
           {story.comments && story.comments.length > 0 ? (
-            story.comments.map(comment => (
+            story.comments.map((comment) => (
               <div key={comment.date} className="mb-4">
-                <p className="font-semibold">{comment.user}</p>
+                <div className="flex items-center gap-2">
+                  <img src={`${comment.userImage}`} alt="user" className="w-12 " />
+                  <p className="font-semibold">{comment.user}</p>
+                </div>
                 <p>{comment.comment}</p>
                 <p className="text-sm text-gray-500">{comment.date}</p>
               </div>
