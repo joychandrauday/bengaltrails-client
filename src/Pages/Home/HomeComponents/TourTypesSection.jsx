@@ -4,6 +4,7 @@ import "react-multi-carousel/lib/styles.css";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import './styles.css'
+import { Link } from "react-router-dom";
 
 const TourTypesSection = () => {
   const axiosSecure = useAxiosSecure();
@@ -91,7 +92,8 @@ const TourTypesSection = () => {
           transitionDuration={5000}
         >
           {tourTypes.map((type) => (
-            <div
+            <Link
+              to={`//tourType/${type?.name}`}
               key={type._id}
               className="w-[150px] h-[150px] mx-auto bg-transparent hover:bg-primary hover:border-primary  rounded-full flex items-center justify-center text-center text-white  border-2 cursor-pointer typeParent"
             >
@@ -99,7 +101,7 @@ const TourTypesSection = () => {
                 <img src={type?.icon} alt="" className="w-2/5 mx-auto invert typeIcon" />
                 <h1 className="text-xl uppercase font-bold typeText">{type?.name}</h1>
               </div>
-            </div>
+            </Link>
           ))}
         </Carousel>
       </div>

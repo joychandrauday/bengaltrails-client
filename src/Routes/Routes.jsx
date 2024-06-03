@@ -33,6 +33,11 @@ const router = createBrowserRouter([
           
         },
         {
+          path: "/tourType/:name",
+          element: <SingleBlogPage></SingleBlogPage>
+          
+        },
+        {
           path: "/sign-in",
           element: <SignIn></SignIn>,
         },
