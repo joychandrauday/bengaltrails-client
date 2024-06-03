@@ -2,6 +2,10 @@ import React from "react";
 import { FaHeart } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 const PackageCard = ({ pack }) => {
+  const navigate=useNavigate()
+  const handleViewPackageClick=(id)=>{
+    navigate(`/package/${id}`)
+  }
   return (
     <div>
       <div

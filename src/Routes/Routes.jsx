@@ -12,6 +12,8 @@ import SignUp from '../Pages/SignUp/SignUp';
 import PrivateRoute from './../Private Route/PrivateRoute';
 import Blog from '../Pages/BlogPage/Blog';
 import SingleBlogPage from '../Pages/BlogPage/SingleBlogPage';
+import TypeWisePackage from '../Pages/Package/TypeWisePackage';
+import PackageDetails from '../Pages/Package/PackageDetails';
 
 const router = createBrowserRouter([
     {
@@ -34,11 +36,18 @@ const router = createBrowserRouter([
         },
         {
           path: "/tourType/:name",
-          element: <SingleBlogPage></SingleBlogPage>
-          
+          element: <TypeWisePackage></TypeWisePackage>
+        },
+        {
+          path: "/package/:id",
+          element: <PackageDetails></PackageDetails>
         },
         {
           path: "/sign-in",
+          element: <SignIn></SignIn>,
+        },
+        {
+          path: "/guides/:name",
           element: <SignIn></SignIn>,
         },
         {

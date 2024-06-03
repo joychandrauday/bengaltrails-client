@@ -93,7 +93,7 @@ const TourTypesSection = () => {
         >
           {tourTypes.map((type) => (
             <Link
-              to={`//tourType/${type?.name}`}
+              to={`/tourType/${type?.name}`}
               key={type._id}
               className="w-[150px] h-[150px] mx-auto bg-transparent hover:bg-primary hover:border-primary  rounded-full flex items-center justify-center text-center text-white  border-2 cursor-pointer typeParent"
             >
