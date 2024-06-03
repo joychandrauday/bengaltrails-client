@@ -11,6 +11,7 @@ import SignIn from '../Pages/Sign In/SignIn';
 import SignUp from '../Pages/SignUp/SignUp';
 import PrivateRoute from './../Private Route/PrivateRoute';
 import Blog from '../Pages/BlogPage/Blog';
+import SingleBlogPage from '../Pages/BlogPage/SingleBlogPage';
 
 const router = createBrowserRouter([
     {
@@ -25,6 +26,11 @@ const router = createBrowserRouter([
         {
           path: "/blog",
           element: <Blog></Blog>
+        },
+        {
+          path: "/story/:id",
+          element: <SingleBlogPage></SingleBlogPage>
+          
         },
         {
           path: "/sign-in",

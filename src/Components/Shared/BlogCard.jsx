@@ -1,18 +1,14 @@
 import React from "react";
-import { BiUserPin } from "react-icons/bi";
-import { CiLocationArrow1 } from "react-icons/ci";
-import { FaHeart, FaLocationArrow, FaLocationDot, FaLocationPin, FaLocationPinLock, FaUserPen } from "react-icons/fa6";
+import { FaHeart, FaLocationDot, FaUserPen } from "react-icons/fa6";
 import { SlCalender } from "react-icons/sl";
 import { Link } from "react-router-dom";
 
 const BlogCard = ({blog}) => {
-    const handleViewPost=(id)=>{
-        console.log(id);
-    }
+    
     const {_id, title, author, date, destination, featureImage, content, images, tags, excerpt, comments}=blog;
   
   return (
-    <div>
+    <div key={_id}>
       <div
         className="card p-0 w-96 bg-base-100 shadow-xl rounded-none border"
       >
@@ -51,12 +47,12 @@ const BlogCard = ({blog}) => {
             </div>
           </div>
           
-          <button
-            onClick={() => handleViewPost(_id)}
+          <Link
             className="btn btn-primary rounded-none bg-primary hover:bg-secondary border-none text-white capitalize"
+            to={`/story/${_id}`}
           >
             read story
-          </button>
+          </Link>
         </div>
       </div>
     </div>

@@ -1,12 +1,12 @@
-import React from 'react';
-import useAxiosSecure from '../../Hooks/useAxiosSecure';
-import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import PageHeader from '../../Components/Shared/PageHeader';
-import BlogCard from '../../Components/Shared/BlogCard';
+import React from "react";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import PageHeader from "../../Components/Shared/PageHeader";
+import BlogCard from "../../Components/Shared/BlogCard";
 
 const Blog = () => {
-    const navigate=useNavigate()
+  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const {
     data: travelStories = [],
@@ -30,19 +30,20 @@ const Blog = () => {
   if (isError) {
     return <div>Error fetching packages data</div>;
   }
-    return (
-        <div>
-            <PageHeader pageTitle={'travel stories'} breadCrumbs={'blog'}></PageHeader>
+  return (
+    <div>
+      <PageHeader
+        pageTitle={"travel stories"}
+        breadCrumbs={"blog"}
+      ></PageHeader>
 
-            <div className="grid lg:grid-cols-3 gap-4 py-12 container mx-auto">
-                {
-                    travelStories.map((blog)=>(
-                        <BlogCard key={blog._id} blog={blog}></BlogCard>
-                    ))
-                }
-            </div>
-        </div>
-    );
+      <div className="grid lg:grid-cols-3 gap-4 py-12 container mx-auto">
+        {travelStories.map((blog) => (
+          <BlogCard key={blog?._id} blog={blog}></BlogCard>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Blog;
