@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
-import { FaBreadSlice, FaHiking, FaHome, FaShoppingCart } from "react-icons/fa";
+import { FaBreadSlice, FaHiking, FaHome, FaShoppingCart, FaUserCog } from "react-icons/fa";
 import {
   FaBangladeshiTakaSign,
   FaBars,
   FaClock,
   FaHouseChimneyUser,
+  FaListCheck,
   FaSpoon,
   FaUser,
   FaUserAstronaut,
@@ -20,6 +21,8 @@ import useGuide from "../../Hooks/useGuide";
 import { GiForkKnifeSpoon, GiSpoon } from "react-icons/gi";
 import { AuthContext } from "../../Provider/Provider";
 import { PiBriefcaseFill } from "react-icons/pi";
+import { FcSerialTasks } from "react-icons/fc";
+import { MdChecklist } from "react-icons/md";
 
 const Dashboard = () => {
   //admin management
@@ -80,11 +83,11 @@ const Dashboard = () => {
                 </>
               ) : (
                 <>
-                  <li>
+                  {/* <li>
                     <NavLink to={"/dashboard/user-home"}>
                       <FaHome /> User Home
                     </NavLink>
-                  </li>
+                  </li> */}
                   <li>
                     <NavLink to={"/dashboard/profile"}>
                       <FaUser /> My Profile
@@ -92,12 +95,17 @@ const Dashboard = () => {
                   </li>
                   <li>
                     <NavLink to={"/dashboard/bookings"}>
-                      <FaShoppingCart /> My bookings
+                    <MdChecklist /> My bookings
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to={"/request-admin"}>
-                      <FaBangladeshiTakaSign />
+                    <NavLink to={"/dashboard/bucket-list"}>
+                    <FaListCheck /> My Bucket List
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to={"/dashboard/request-admin"}>
+                      <FaUserCog />
                       Request Admin
                     </NavLink>
                   </li>

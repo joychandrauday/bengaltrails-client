@@ -18,6 +18,9 @@ import AdminRoute from './../Pages/dashboard/AdminRoute';
 import AllUsers from "../Pages/dashboard/AllUsers";
 import UserProfile from "../Pages/dashboard/UserProfile copy";
 import AddPackage from "../Pages/dashboard/AddPackage";
+import Bookings from "../Pages/dashboard/Bookings";
+import BucketList from "../Pages/dashboard/BucketList";
+import ReqAdmin from "../Pages/dashboard/ReqAdmin";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +81,18 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <UserProfile></UserProfile>,
+      },
+      {
+        path: "bookings",
+        element: <Bookings></Bookings>,
+      },
+      {
+        path: "bucket-list",
+        element: <BucketList></BucketList>,
+      },
+      {
+        path: "request-admin",
+        element: <ReqAdmin></ReqAdmin>,
       },
       {
         path: "add-package",
