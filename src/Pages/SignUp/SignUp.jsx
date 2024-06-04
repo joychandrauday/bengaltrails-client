@@ -8,9 +8,11 @@ import { FaEye } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import useAxiosPublic from './../../Hooks/useAxiosPublic copy';
 
 const auth = getAuth(app);
 const SignUp = () => {
+  const axiosPublic=useAxiosPublic()
   const {
     user,
     setUser,
@@ -36,19 +38,31 @@ const SignUp = () => {
       // Create the user
       const { email, password, Name, photoURL } = data;
       const newUser = await userSignUp(email, password);
-      signOut(auth);
-      //console.log("User created:", newUser);
-
+      
+      const userInfo={
+        name: Name,
+        email: email,
+        image: photoURL,
+        password: password,
+        role: 'user'
+      }
+      axiosPublic.post('/users',userInfo)
+      .then(res=>{
+        if (res.data.insertedId) {
+          updateUser(Name, photoURL);
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "You are registered!!!",
+            text: "now log in to continue",
+            showConfirmButton: true,
+          });
+          signOut(auth);
+          navigate("/sign-in");
+          
+        }
+      })
       // Update the user profile
-      await updateUser(Name, photoURL);
-      navigate("/sign-in");
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "You are registered!!!",
-        text: "now log in to continue",
-        showConfirmButton: true,
-      });
     } catch (error) {
       Swal.fire({
         icon: "error",
