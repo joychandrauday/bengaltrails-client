@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../Provider/Provider';
-
+import useGuide from "../../Hooks/useGuide";
 
 const UserProfile = () => {
+    const [isGuide]=useGuide()
+    
     const {user,logOut}=useContext(AuthContext)
     return (
-        <div className='min-h-screen '>
+        <div className='min-h-screen bg-primary text-white'>
             <div className="flex items-center justify-center gap-4">
                 <div className="p-4 flex items-center justify-center flex-col text-center gap-4">
                     <img src={user?.photoURL} className='w-3/5 rounded-full' alt="" />

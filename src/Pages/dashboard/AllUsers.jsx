@@ -93,7 +93,7 @@ const AllUsers = () => {
     });
   }
   return (
-    <div>
+    <div className="bg-gradient-to-r to-slate-900 from-primary text-white min-h-screen">
       <div className="flex w-4/5 pt-16 mx-auto justify-center items-center">
         <h1 className="basis-2/3 capitalize font-bold text-3xl">all users</h1>
         <h1 className="basis-1/3 capitalize font-bold text-3xl">
@@ -101,7 +101,7 @@ const AllUsers = () => {
         </h1>
       </div>
       <div className="overflow-x-auto w-4/5 mx-auto">
-        <table className="table table-zebra w-full text-xl text-left ">
+        <table className="table text-white w-full text-xl text-left ">
           {/* head */}
           <thead>
             <tr>

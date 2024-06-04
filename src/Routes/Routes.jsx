@@ -16,6 +16,7 @@ import Dashboard from "../Pages/dashboard/Dashboard";
 import AdminHome from "../Pages/dashboard/AdminHome";
 import AdminRoute from './../Pages/dashboard/AdminRoute';
 import AllUsers from "../Pages/dashboard/AllUsers";
+import UserProfile from "../Pages/dashboard/UserProfile copy";
 
 const router = createBrowserRouter([
   {
@@ -74,10 +75,26 @@ const router = createBrowserRouter([
         element: <AdminHome></AdminHome>,
       },
       {
+        path: "profile",
+        element: <UserProfile></UserProfile>,
+      },
+      {
+        path: "add-package",
+        element: <AdminRoute></AdminRoute>,
+      },
+      {
         path: "users",
         element: (
           <AdminRoute>
             <AllUsers></AllUsers>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "user-home",
+        element: (
+          <AdminRoute>
+            <UserProfile></UserProfile>
           </AdminRoute>
         ),
       },
