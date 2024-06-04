@@ -23,7 +23,6 @@ const Provider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [reload, setReload] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [librarian, setLibrarian] = useState(false);
   
   const userSignUp = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -38,26 +37,6 @@ const Provider = ({ children }) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
-      const userEmail= currentUser?.email || user?.email
-      const loggedUser = { email: userEmail };
-      if (currentUser) {
-        axios
-          .post("https://bookersdenserver.vercel.app/jwt", loggedUser, {
-            withCredentials: true,
-          })
-          .then((res) => { 
-            // console.log(res.data);
-          });
-        }else{
-          axios
-            .post("https://bookersdenserver.vercel.app/logout", loggedUser, {
-              withCredentials: true,
-            })
-            .then((res) => {
-              // console.log(res.data);
-            });
-
-      }
     });
     return () => {
       unSubscribe();
@@ -84,7 +63,6 @@ const Provider = ({ children }) => {
 
   const userInfo = {
     user,
-    librarian,
     setUser,
     setReload,
     userSignUp,

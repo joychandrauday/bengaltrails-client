@@ -14,6 +14,7 @@ import Blog from '../Pages/BlogPage/Blog';
 import SingleBlogPage from '../Pages/BlogPage/SingleBlogPage';
 import TypeWisePackage from '../Pages/Package/TypeWisePackage';
 import PackageDetails from '../Pages/Package/PackageDetails';
+import TourGuideSingle from '../Pages/Guide/TourGuideSingle';
 
 const router = createBrowserRouter([
     {
@@ -40,15 +41,15 @@ const router = createBrowserRouter([
         },
         {
           path: "/package/:id",
-          element: <PackageDetails></PackageDetails>
+          element: <PrivateRoute><PackageDetails></PackageDetails></PrivateRoute>
         },
         {
           path: "/sign-in",
           element: <SignIn></SignIn>,
         },
         {
-          path: "/guides/:name",
-          element: <SignIn></SignIn>,
+          path: "/guide/:guideId",
+          element: <TourGuideSingle></TourGuideSingle>,
         },
         {
           path: "/sign-up",

@@ -14,7 +14,7 @@ import "./styles.css";
 // import required modules
 import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const TourGuides = () => {
   const axiosSecure = useAxiosSecure();
@@ -61,7 +61,7 @@ const TourGuides = () => {
       >
         {guides.map((guide) => (
           <SwiperSlide key={guide._id}>
-            <div className="py-12">
+            <Link to={`/guide/${guide._id}`} className="py-12">
               <div className="card cursor-pointer rounded-none h-[220px] px-0 bg-secondary text-white guideCard relative">
                 <div className="rounded-full w-4/6  mx-auto">
                   <img src={guide.imageUrl} alt="" className="guideImage" />
@@ -71,7 +71,7 @@ const TourGuides = () => {
                     <h1 className="capitalize font-bold text-white">see details</h1>
                 </div>
               </div>
-            </div>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>
