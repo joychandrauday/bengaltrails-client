@@ -17,6 +17,7 @@ import AdminHome from "../Pages/dashboard/AdminHome";
 import AdminRoute from './../Pages/dashboard/AdminRoute';
 import AllUsers from "../Pages/dashboard/AllUsers";
 import UserProfile from "../Pages/dashboard/UserProfile copy";
+import AddPackage from "../Pages/dashboard/AddPackage";
 
 const router = createBrowserRouter([
   {
@@ -80,7 +81,7 @@ const router = createBrowserRouter([
       },
       {
         path: "add-package",
-        element: <AdminRoute></AdminRoute>,
+        element: <AdminRoute><AddPackage></AddPackage></AdminRoute>,
       },
       {
         path: "users",

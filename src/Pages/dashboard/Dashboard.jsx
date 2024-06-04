@@ -63,40 +63,17 @@ const Dashboard = () => {
                 <>
                   <li>
                     <NavLink to={"/dashboard/admin-home"}>
-                      <FaHouseChimneyUser /> My Profile
+                      <FaHouseChimneyUser /> Admin Profile
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to={"/dashboard/add-item"}>
+                    <NavLink to={"/dashboard/add-package"}>
                       <PiBriefcaseFill /> Add Package
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to={"/dashboard/food-management"}>
-                      <FaSpoon /> Manage Food
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to={"/dashboard/users"}>
                       <FaUserAstronaut /> User Management
-                    </NavLink>
-                  </li>
-                  <div className="divider"></div>
-                </>
-              ) : (
-                ""
-              )}
-              {isGuide ? (
-                <>
-                  <li>
-                    <NavLink to={"/dashboard/profile"}>
-                      <FaUserPlus /> My Profile
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to={"/dashboard/assigned"}>
-                      <FaHiking />
-                      My Assigned Tours
                     </NavLink>
                   </li>
                   <div className="divider"></div>
@@ -126,6 +103,24 @@ const Dashboard = () => {
                   </li>
                   <div className="divider"></div>
                 </>
+              )}
+              {isGuide ? (
+                <>
+                  <li>
+                    <NavLink to={"/dashboard/profile"}>
+                      <FaUserPlus /> My Profile
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to={"/dashboard/assigned"}>
+                      <FaHiking />
+                      My Assigned Tours
+                    </NavLink>
+                  </li>
+                  <div className="divider"></div>
+                </>
+              ) : (
+                ""
               )}
 
               <li>
