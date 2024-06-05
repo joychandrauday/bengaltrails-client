@@ -101,7 +101,6 @@ const AddPackage = () => {
                   className="mt-1 px-4 py-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
                 >
                   <option value="wildlife">Wildlife</option>
-                  <option value="adventure">Adventure</option>
                   <option value="culture">Culture</option>
                   <option value="walking">walking</option>
                   <option value="culture">Culture</option>

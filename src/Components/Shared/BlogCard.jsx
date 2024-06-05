@@ -21,29 +21,6 @@ const BlogCard = ({ blog }) => {
     excerpt,
     tags
   } = blog;
-  const axiosSecure=useAxiosSecure();
-  const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
-
-  const { user } = useContext(AuthContext); // Get user information from context
-
-  const handleAddToWishlist = async () => {
-    if (!user) {
-      toast("Please log in to add to your wishlist.");
-      return;
-    }
-
-    try {
-      // Assuming you have an endpoint to add to wishlist
-      await axiosSecure.post(`/bucket-list`, { blogId: _id, email: user.email });
-      setIsAddedToWishlist(true);
-      toast("Added to your wishlist!");
-    } catch (error) {
-      console.error("Error adding to wishlist:", error);
-      // Optionally, show an error notification to the user
-      toast("Failed to add to wishlist.");
-    }
-  };
-
   return (
     <div key={_id}>
       <ToastContainer />
@@ -56,15 +33,7 @@ const BlogCard = ({ blog }) => {
             }
             alt={title}
           />
-          <button
-            onClick={handleAddToWishlist}
-            className={ isAddedToWishlist ? "bg-secondary p-4 text-xl z-[999999999] rounded text-white btn absolute top-2 right-2" : `p-4 text-xl bg-primary rounded text-white btn absolute top-2 right-2 
-            `} 
-            
-            disabled={isAddedToWishlist}
-          >
-            <FaHeart />
-          </button>
+          
         </figure>
         <div className="card-body pt-4">
           <div className="flex items-center gap-2">

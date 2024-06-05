@@ -96,12 +96,12 @@ const PackageDetails = () => {
     // Show the confirmation message
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "You your booking will be saved!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Yes, Book for me",
     }).then(() => {
       axiosSecure
         .post("/bookings", data)
@@ -252,6 +252,16 @@ const PackageDetails = () => {
                 readOnly
                 className="input input-bordered w-full"
                 {...register("price")}
+              />
+            </div>
+            <div>
+              <label className="block mb-2 font-semibold">Featured mage</label>
+              <input
+                type="text"
+                value={tourFeaturedPhoto}
+                readOnly
+                className="input input-bordered w-full"
+                {...register("tourFeaturedPhoto")}
               />
             </div>
             <div>
