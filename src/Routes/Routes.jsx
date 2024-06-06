@@ -21,6 +21,7 @@ import AddPackage from "../Pages/dashboard/AddPackage";
 import Bookings from "../Pages/dashboard/Bookings";
 import BucketList from "../Pages/dashboard/BucketList";
 import ReqAdmin from "../Pages/dashboard/ReqAdmin";
+import GuideAssignedTour from "../Pages/dashboard/GuideAssignedTour";
 
 const router = createBrowserRouter([
   {
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
       {
         path: "request-admin",
         element: <ReqAdmin></ReqAdmin>,
+      },
+      {
+        path: "assigned",
+        element: <GuideAssignedTour></GuideAssignedTour>,
       },
       {
         path: "add-package",

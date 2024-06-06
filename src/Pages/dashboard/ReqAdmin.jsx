@@ -1,11 +1,43 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../Provider/Provider";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const ReqAdmin = () => {
   const { user } = useContext(AuthContext);
-  const handleReqAdmin=(email)=>{
-    console.log(email);
+  const axiosSecure=useAxiosSecure()
+  const {
+    data: newBieGuide = {},
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["email"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/user?email=${user?.email}`);
+      return res.data;
+    },
+  });
+  const handleReqAdmin=(id)=>{
+    axiosSecure.patch(`/users/${id}`, {
+              role: 'guidePending',
+            })
+            .then((response) => {
+              if (response.data.modifiedCount>0) {
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "You applied to be a tour guide.",
+                  showConfirmButton: true,
+                })
+              }
+            })
+            .catch((error) =>
+              toast("Error updating book numbers:", error)
+            );
   }
+  console.log(newBieGuide);
   return (
     <div className="">
       <div className="wrap bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% min-h-screen flex items-center justify-center">
@@ -16,7 +48,7 @@ const ReqAdmin = () => {
               <p className="py-6 capitalize text-xl">
                 request to admin to be a travel guide.a vast profession with diversity.
               </p>
-              <button onClick={()=>handleReqAdmin(user.email)} className="btn btn-primary bg-primary border-none rounded-none capitalize w-full">request now</button>
+              <button onClick={()=>handleReqAdmin(newBieGuide?._id)} className="btn btn-primary bg-primary border-none rounded-none capitalize w-full">request now</button>
             </div>
           </div>
         </div>

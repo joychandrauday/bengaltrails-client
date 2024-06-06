@@ -79,6 +79,11 @@ const Dashboard = () => {
                       <FaUserAstronaut /> User Management
                     </NavLink>
                   </li>
+                  <li>
+                    <NavLink to={"/dashboard/guide"}>
+                      <FaHiking /> Guide Management
+                    </NavLink>
+                  </li>
                   <div className="divider"></div>
                 </>
               ) : (

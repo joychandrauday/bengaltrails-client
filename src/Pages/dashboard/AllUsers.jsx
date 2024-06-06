@@ -1,21 +1,68 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import { FaTrashAlt, FaUserCog, FaUserEdit, FaUserPlus } from "react-icons/fa";
-import { FaUser } from "react-icons/fa6";
+import {
+  FaHiking,
+  FaTrashAlt,
+  FaUserCog,
+} from "react-icons/fa";
 import Swal from "sweetalert2";
+import Select from "react-select";
+
+const customStyles = {
+  control: (baseStyles, state) => ({
+    ...baseStyles,
+    backgroundColor: "#FFF000",
+    color: "black",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected ? "#FFD700" : "#FFF000", // Different background color for selected option
+    color: state.isSelected ? "black" : "black", // Text color for selected option
+    "&:hover": {
+      backgroundColor: "#FFD700", // Background color when hovering
+      color: "black", // Text color when hovering
+    },
+  }),
+  singleValue: (provided, state) => ({
+    ...provided,
+    color: "black", // Text color for single value
+  }),
+};
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: users = [] } = useQuery({
+  const [searchByRole, setSearchByRole] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { refetch, data: users = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
       return res.data;
     },
   });
-  
-  const handleDelete=(id)=>{
+
+  const roleOptions = [
+    { value: "user", label: "User" },
+    { value: "admin", label: "Admin" },
+    { value: "guide", label: "Guide" },
+  ];
+
+  const usersPerPage = 10;
+  const totalPages = Math.ceil(users.length / usersPerPage);
+
+  const filterUser = users.filter((user) => {
+    const matchesSearchTerm =
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesRole = searchByRole ? user.role === searchByRole.value : true;
+
+    return matchesSearchTerm && matchesRole;
+  });
+
+  const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -26,9 +73,11 @@ const AllUsers = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/users/${id}`)
+        axiosSecure
+          .delete(`/users/${id}`)
           .then((res) => {
             if (res.data.deletedCount > 0) {
+              refetch();
               Swal.fire({
                 title: "Deleted!",
                 text: "the user has been deleted.",
@@ -52,8 +101,9 @@ const AllUsers = () => {
           });
       }
     });
-  }
-  const handleMakeAdmin=(id)=>{
+  };
+
+  const handleMakeAdmin = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -64,10 +114,11 @@ const AllUsers = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.patch(`/users/admin/${id}`)
+        axiosSecure
+          .patch(`/users/admin/${id}`)
           .then((res) => {
             if (res.data?.modifiedCount > 0) {
-              refetch()
+              refetch();
               Swal.fire({
                 title: "made admin!",
                 text: "the user has been made an admin.",
@@ -91,9 +142,17 @@ const AllUsers = () => {
           });
       }
     });
-  }
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const startIndex = (currentPage - 1) * usersPerPage;
+  const currentUsers = filterUser.slice(startIndex, startIndex + usersPerPage);
+
   return (
-    <div className="bg-gradient-to-r to-slate-900 from-primary text-white min-h-screen">
+    <div className="bg-newsletter bg-cover bg-fixed bg-no-repeat bg-center pb-12 text-white min-h-screen">
       <div className="flex w-4/5 pt-16 mx-auto justify-center items-center">
         <h1 className="basis-2/3 capitalize font-bold text-3xl">all users</h1>
         <h1 className="basis-1/3 capitalize font-bold text-3xl">
@@ -101,8 +160,25 @@ const AllUsers = () => {
         </h1>
       </div>
       <div className="overflow-x-auto w-4/5 mx-auto">
-        <table className="table text-white w-full text-xl text-left ">
-          {/* head */}
+        <div className="flex items-center gap-4">
+          <Select
+            options={roleOptions}
+            placeholder="Filter by role"
+            isClearable
+            onChange={(option) => setSearchByRole(option)}
+            className="w-full max-w-xs"
+            value={searchByRole}
+            styles={customStyles}
+          />
+          <input
+            type="text"
+            placeholder="Search by name or email"
+            className="input rounded-none border-none bg-black w-full max-w-xs mr-4"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        <table className="table text-white w-full text-xl text-left">
           <thead>
             <tr>
               <th>Index</th>
@@ -113,22 +189,49 @@ const AllUsers = () => {
             </tr>
           </thead>
           <tbody>
-            {/* row 1 */}
-            {users.map((user,index) => 
+            {currentUsers.map((user, index) => (
               <tr key={user._id}>
-                <th>{index+1}</th>
+                <th>{startIndex + index + 1}</th>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
-                <td>{user.role}
-                </td>
+                <td>{user.role}</td>
                 <td className="gap-2 flex">
-                  <button className="btn btn-warning bg-transparent" onClick={()=>handleDelete(user?._id)}><FaTrashAlt className="text-white text-xl"></FaTrashAlt></button>
-                  <button data-tip="make admin" disabled={user.role === 'admin'} className="btn btn-warning bg-transparent tooltip tooltip-top" onClick={()=>handleMakeAdmin(user?._id)}>{user.role ==='admin'?'admin':<FaUserCog className={user.role ==='admin'?"text-white opacity-25 text-xl": "text-white text-xl"}></FaUserCog>}</button>
+                  <button
+                    className="btn btn-warning bg-transparent"
+                    onClick={() => handleDelete(user?._id)}
+                  >
+                    <FaTrashAlt className="text-white text-xl"></FaTrashAlt>
+                  </button>
+                  <button
+                    data-tip="make admin"
+                    disabled={user.role === "admin"}
+                    className="btn btn-warning bg-transparent tooltip tooltip-top"
+                    onClick={() => handleMakeAdmin(user?._id)}
+                  >
+                    {user.role === "admin" ? (
+                      "admin"
+                    ) : user.role === "guide" ? (
+                      <FaHiking className="text-white text-xl" />
+                    ) : (
+                      <FaUserCog className="text-white text-xl" />
+                    )}
+                  </button>
                 </td>
               </tr>
-            )}
+            ))}
           </tbody>
         </table>
+        <div className="flex justify-center mt-4">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              className={`btn mx-1 ${page === currentPage ? 'btn-active' : ''}`}
+              onClick={() => handlePageChange(page)}
+            >
+              {page}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
