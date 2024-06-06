@@ -2,27 +2,75 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Provider/Provider";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 
 const Bookings = () => {
   const { user } = useContext(AuthContext);
   const [booking, setbooking] = useState([]);
   const axiosSecure = useAxiosSecure();
   const email = user?.email;
-  useEffect(() => {
-    const fetchbooking = async () => {
-      try {
-        const response = await axiosSecure.get(`/booking?email=${email}`);
-        setbooking(response.data);
-      } catch (error) {
-        console.error("Error fetching booking:", error);
-      }
-    };
+  const { refetch, data: bookings = [] } = useQuery({
+    queryKey: ["bookings"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/booking?email=${email}`);
+      return res.data;
+    },
+  });
+  // useEffect(() => {
+  //   const fetchbooking = async () => {
+  //     try {
+  //       const response = await axiosSecure.get();
+  //       setbooking(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching booking:", error);
+  //     }
+  //   };
 
-    if (email) {
-      fetchbooking();
-    }
-  }, [user]);
-  console.log(booking);
+  //   if (email) {
+  //     fetchbooking();
+  //   }
+  // }, [user]);
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .delete(`/bookings/${id}`)
+          .then((res) => {
+            if (res.data.deletedCount > 0) {
+              refetch();
+              Swal.fire({
+                title: "Deleted!",
+                text: "the booking has been deleted.",
+                icon: "success",
+              });
+            } else {
+              Swal.fire({
+                title: "Error",
+                text: "Some Error occured.",
+                icon: "error",
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Error deleting book:", error);
+            Swal.fire({
+              title: "Error",
+              text: "An error occurred while deleting the book.",
+              icon: "error",
+            });
+          });
+      }
+    });
+  };
   return (
     <div>
       <div className="min-h-screen flex items-start py-12 justify-center bg-gradient-to-r from-primary to-gray-400">
@@ -30,8 +78,8 @@ const Bookings = () => {
           <h1 className="font-bold text-white mb-12 text-3xl capitalize">
             My booking List
           </h1>
-          <div className="">
-            <table className="table w-11/12 mx-auto">
+          <div className="overflow-x-auto">
+            <table className="table">
               {/* head */}
               <thead>
                 <tr className="text-white">
@@ -39,11 +87,12 @@ const Bookings = () => {
                   <th>Feature Image</th>
                   <th>Package Name</th>
                   <th>Price</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {booking.map((booking, index) => (
+                {bookings.map((booking, index) => (
                   <tr key={booking._id} className="text-white">
                     <th className="w-12">{index + 1}</th>
                     <td>
@@ -66,9 +115,16 @@ const Bookings = () => {
                         {booking.price} BDT
                       </div>
                     </td>
+                    <td>
+                      <div className="text-sm opacity-50">
+                        {booking.status}{" "}
+                        <div className="badge badge-warning badge-xs"></div>
+                      </div>
+                    </td>
                     <th className="flex items-center gap-2">
                       <button
-                        className="btn btn-circle btn-outline btn-sm"
+                        disabled={booking.status!=='pending'}
+                        className="btn btn-circle btn-outline btn-sm "
                         onClick={() => handleDelete(booking?._id)}
                       >
                         <svg
@@ -86,12 +142,6 @@ const Bookings = () => {
                           />
                         </svg>
                       </button>
-                      <Link
-                        to={`/package/${booking._id}`}
-                        className="btn rounded-none bg-primary border-none text-white btn-accent"
-                      >
-                        Book Now
-                      </Link>
                     </th>
                   </tr>
                 ))}

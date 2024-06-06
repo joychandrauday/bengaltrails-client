@@ -48,6 +48,7 @@ const ManageGuide = () => {
           .patch(`/users/${id}`, {
             role: "user",
             guide: "none",
+            reqGuide: true,
           })
           .then((res) => {
             if (res.data?.modifiedCount > 0) {
@@ -92,6 +93,7 @@ const ManageGuide = () => {
           .patch(`/users/${id}`, {
             role: "guide",
             guide: "approved",
+            reqGuide: true,
           })
           .then((res) => {
             if (res.data?.modifiedCount > 0) {
@@ -131,9 +133,9 @@ const ManageGuide = () => {
   return (
     <div className="bg-newsletter bg-cover bg-fixed bg-no-repeat bg-center pb-12 text-white min-h-screen">
       <div className="flex w-4/5 pt-16 mx-auto justify-center items-center">
-        <h1 className="basis-2/3 capitalize font-bold text-3xl">all users</h1>
+        <h1 className="basis-2/3 capitalize font-bold text-3xl">all guide request.</h1>
         <h1 className="basis-1/3 capitalize font-bold text-3xl">
-          total users({users?.length})
+          total guide request ({users?.length})
         </h1>
       </div>
       <div className="overflow-x-auto w-4/5 mx-auto">
@@ -164,22 +166,28 @@ const ManageGuide = () => {
                 <td>{user.email}</td>
                 <td>
                   {user.guide === "pending" ? (
-                    <div className="text-gray-400 ">
-                      pending{" "}
-                      <div className="badge badge-xs badge-warning"></div>{" "}
+                    <div className="text-gray-400">
+                      Pending
+                      <div className="badge badge-xs badge-warning"></div>
                     </div>
-                  ) : user.guide === "accepted" ? (
-                    <div className="text-gray-400 ">
-                      accepted{" "}
-                      <div className="badge badge-xs badge-warning"></div>{" "}
+                  ) : user.guide === "approved" ? (
+                    <div className="text-gray-400">
+                      Approved
+                      <div className="badge badge-xs badge-warning"></div>
+                    </div>
+                  ) : user.guide === "rejected" ? (
+                    <div className="text-gray-400">
+                      Rejected
+                      <div className="badge badge-xs badge-accent"></div>
                     </div>
                   ) : (
-                    <div className="text-gray-400 ">
-                      rejected{" "}
-                      <div className="badge badge-xs badge-accent"></div>{" "}
+                    <div className="text-gray-400">
+                      None
+                      <div className="badge badge-xs badge-accent"></div>
                     </div>
                   )}
                 </td>
+
                 <td className="gap-2 flex text-xl">
                   <button
                     data-tip="reject"

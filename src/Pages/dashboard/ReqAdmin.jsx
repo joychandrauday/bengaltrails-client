@@ -23,7 +23,7 @@ const ReqAdmin = () => {
     axiosSecure
       .patch(`/users/${id}`, {
         guide: "pending",
-        reqGuide:true,
+        reqGuide: true,
       })
       .then((response) => {
         if (response.data.modifiedCount > 0) {
@@ -63,15 +63,29 @@ const ReqAdmin = () => {
               <div className="max-w-md">
                 <ul className="steps steps-vertical">
                   <li className="step step-primary">Request Submitted.</li>
-                  <li className="step step-primary"><div className="flex items-center gap-1">Pending <div className="badge badge-warning badge-xs"></div></div></li>
-                  {
-                    newBieGuide.guide==='rejected'?
-                    <li className="step step-primary">rejected</li>:''
-                  }
-                  {
+                  <li className="step step-primary">
+                    <div className="flex items-center gap-1">
+                      {
+                        newBieGuide.guide === 'pending'?<div>Pending{" "}
+                        <div className="badge badge-warning badge-xs"></div></div>:newBieGuide.guide === "rejected" ?<div>rejected{" "}
+                        <div className="badge badge-accent badge-xs"></div></div>:<div>Congratulations!!.You are a guide now{" "}
+                        </div>
+                      }
+                    </div>
+                  </li>
+                  {/* {newBieGuide.guide !== "rejected" ? (
+                    <li className="step step-primary">rejected</li>
+                  ) :newBieGuide.guide === "pending" ? (
+                    ''
+                  ) :(
+                    <li className="step step-primary">
+                      Congratulations!!.You are a guide now{" "}
+                    </li>
+                  )}
+                  {/* {
                     newBieGuide.guide==='approved'?
-                    <li className="step step-primary">Congratulations!!.You are a guide now </li>:''
-                  }
+                    :''
+                  } */}
                 </ul>
               </div>
             )}

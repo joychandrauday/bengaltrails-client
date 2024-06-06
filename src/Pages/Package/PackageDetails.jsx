@@ -255,7 +255,7 @@ const PackageDetails = () => {
               />
             </div>
             <div>
-              <label className="block mb-2 font-semibold">Featured mage</label>
+              <label className="block mb-2 font-semibold">Featured Image</label>
               <input
                 type="text"
                 value={tourFeaturedPhoto}
@@ -283,14 +283,14 @@ const PackageDetails = () => {
                 Select A Tour Guide
               </label>
               <select
-                {...register("tourGuideId", { required: true })}
+                {...register("guideEmail", { required: true })}
                 className="select select-bordered w-full"
               >
                 <option value="" disabled>
                   Select a guide
                 </option>
                 {guides.map((guide) => (
-                  <option key={guide._id} value={guide._id}>
+                  <option key={guide.email} value={guide.guideEmail}>
                     {guide.guideName}
                   </option>
                 ))}
@@ -299,6 +299,12 @@ const PackageDetails = () => {
                 <p className="text-red-500">Tour guide name is required</p>
               )}
             </div>
+            {/* Add hidden input for status */}
+            <input
+              type="hidden"
+              value="pending"
+              {...register("status")}
+            />
             <button
               type="submit"
               className="btn btn-primary w-full bg-primary rounded-none border-none text-white"
