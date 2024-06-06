@@ -1,50 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import { FaHiking, FaTrashAlt, FaUserCog } from "react-icons/fa";
+import { FaCheck, FaHiking, FaTrashAlt, FaUserCog } from "react-icons/fa";
 import Swal from "sweetalert2";
 import Select from "react-select";
+import { FaCross } from "react-icons/fa6";
+import { RxCrossCircled } from "react-icons/rx";
+import { IoMdCheckmarkCircle } from "react-icons/io";
 
-const customStyles = {
-  control: (baseStyles, state) => ({
-    ...baseStyles,
-    backgroundColor: "#FFF000",
-    color: "black",
-  }),
-  option: (provided, state) => ({
-    ...provided,
-    backgroundColor: state.isSelected ? "#FFD700" : "#FFF000", // Different background color for selected option
-    color: state.isSelected ? "black" : "black", // Text color for selected option
-    "&:hover": {
-      backgroundColor: "#FFD700", // Background color when hovering
-      color: "black", // Text color when hovering
-    },
-  }),
-  singleValue: (provided, state) => ({
-    ...provided,
-    color: "black", // Text color for single value
-  }),
-};
-
-const AllUsers = () => {
+const ManageGuide = () => {
   const axiosSecure = useAxiosSecure();
-  const [searchByRole, setSearchByRole] = useState(null);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
   const { refetch, data: users = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/users");
+      const res = await axiosSecure.get("/reqGuide");
       return res.data;
     },
   });
-
-  const roleOptions = [
-    { value: "user", label: "User" },
-    { value: "admin", label: "Admin" },
-    { value: "guide", label: "Guide" },
-  ];
 
   const usersPerPage = 10;
   const totalPages = Math.ceil(users.length / usersPerPage);
@@ -53,12 +29,11 @@ const AllUsers = () => {
     const matchesSearchTerm =
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesRole = searchByRole ? user.role === searchByRole.value : true;
 
-    return matchesSearchTerm && matchesRole;
+    return matchesSearchTerm;
   });
 
-  const handleDelete = (id) => {
+  const handleReject = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -70,13 +45,16 @@ const AllUsers = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure
-          .delete(`/users/${id}`)
+          .patch(`/users/${id}`, {
+            role: "user",
+            guide: "none",
+          })
           .then((res) => {
-            if (res.data.deletedCount > 0) {
+            if (res.data?.modifiedCount > 0) {
               refetch();
               Swal.fire({
-                title: "Deleted!",
-                text: "the user has been deleted.",
+                title: "rejected as tour guide!",
+                text: "the guide request has been canceled.",
                 icon: "success",
               });
             } else {
@@ -88,10 +66,10 @@ const AllUsers = () => {
             }
           })
           .catch((error) => {
-            console.error("Error deleting book:", error);
+            console.error("Error rejecting book:", error);
             Swal.fire({
               title: "Error",
-              text: "An error occurred while deleting the book.",
+              text: "An error occurred while making the user admin.",
               icon: "error",
             });
           });
@@ -99,7 +77,7 @@ const AllUsers = () => {
     });
   };
 
-  const handleMakeAdmin = (id) => {
+  const handleMakeGuide = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -107,11 +85,14 @@ const AllUsers = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Yes, make him a guide.",
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure
-          .patch(`/users/admin/${id}`)
+          .patch(`/users/${id}`, {
+            role: "guide",
+            guide: "approved",
+          })
           .then((res) => {
             if (res.data?.modifiedCount > 0) {
               refetch();
@@ -146,7 +127,7 @@ const AllUsers = () => {
 
   const startIndex = (currentPage - 1) * usersPerPage;
   const currentUsers = filterUser.slice(startIndex, startIndex + usersPerPage);
-  
+
   return (
     <div className="bg-newsletter bg-cover bg-fixed bg-no-repeat bg-center pb-12 text-white min-h-screen">
       <div className="flex w-4/5 pt-16 mx-auto justify-center items-center">
@@ -157,15 +138,6 @@ const AllUsers = () => {
       </div>
       <div className="overflow-x-auto w-4/5 mx-auto">
         <div className="flex items-center gap-4">
-          <Select
-            options={roleOptions}
-            placeholder="Filter by role"
-            isClearable
-            onChange={(option) => setSearchByRole(option)}
-            className="w-full max-w-xs"
-            value={searchByRole}
-            styles={customStyles}
-          />
           <input
             type="text"
             placeholder="Search by name or email"
@@ -176,11 +148,11 @@ const AllUsers = () => {
         </div>
         <table className="table text-white w-full text-xl text-left">
           <thead>
-            <tr>
+            <tr className="text-white">
               <th>Index</th>
               <th>Name</th>
               <th>Email</th>
-              <th>Role</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -190,27 +162,48 @@ const AllUsers = () => {
                 <th>{startIndex + index + 1}</th>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
-                <td>{user.role}</td>
-                <td className="gap-2 flex">
+                <td>
+                  {user.guide === "pending" ? (
+                    <div className="text-gray-400 ">
+                      pending{" "}
+                      <div className="badge badge-xs badge-warning"></div>{" "}
+                    </div>
+                  ) : user.guide === "accepted" ? (
+                    <div className="text-gray-400 ">
+                      accepted{" "}
+                      <div className="badge badge-xs badge-warning"></div>{" "}
+                    </div>
+                  ) : (
+                    <div className="text-gray-400 ">
+                      rejected{" "}
+                      <div className="badge badge-xs badge-accent"></div>{" "}
+                    </div>
+                  )}
+                </td>
+                <td className="gap-2 flex text-xl">
                   <button
-                    className="btn btn-warning bg-transparent"
-                    onClick={() => handleDelete(user?._id)}
+                    data-tip="reject"
+                    disabled={user.guide !== "pending"}
+                    className={
+                      user.guide !== "pending"
+                        ? "text-gray-400 opacity-50 cursor-not-allowed"
+                        : "bg-transparent tooltip tooltip-top "
+                    }
+                    onClick={() => handleReject(user?._id)}
                   >
-                    <FaTrashAlt className="text-white text-xl"></FaTrashAlt>
+                    <RxCrossCircled className="text-white text-3xl hover:text-primary  "></RxCrossCircled>
                   </button>
                   <button
-                    data-tip="make admin"
-                    disabled={user.role === "admin"}
-                    className="btn btn-warning bg-transparent tooltip tooltip-top"
-                    onClick={() => handleMakeAdmin(user?._id)}
+                    data-tip="approve"
+                    disabled={user.guide !== "pending"}
+                    className={
+                      user.guide !== "pending"
+                        ? "text-gray-400 opacity-50 cursor-not-allowed"
+                        : "bg-transparent tooltip tooltip-top "
+                    }
+                    onClick={() => handleMakeGuide(user?._id)}
                   >
-                    {user.role === "admin" ? (
-                      "admin"
-                    ) : user.role === "guide" ? (
-                      <FaHiking className="text-white text-xl" />
-                    ) : (
-                      <FaUserCog className="text-white text-xl" />
-                    )}
+                    <IoMdCheckmarkCircle className="text-3xl hover:text-warning  "></IoMdCheckmarkCircle>
                   </button>
                 </td>
               </tr>
@@ -233,4 +226,4 @@ const AllUsers = () => {
   );
 };
 
-export default AllUsers;
+export default ManageGuide;
