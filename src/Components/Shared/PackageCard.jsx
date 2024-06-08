@@ -62,7 +62,7 @@ const PackageCard = ({ pack }) => {
             <h2 className="card-title">{pack.packageName}</h2>
             <div className="badge badge-outline">{pack.tourType}</div>
           </div>
-          <p className="text-left">{pack.aboutTour}</p>
+          <p className="text-left">{pack.aboutTour.slice(0,150)}...</p>
           <div className="card-actions">
             <div className="capitalize font-bold text-xl">
               price: <span className="font-extrabold">{pack.price} BDT</span>

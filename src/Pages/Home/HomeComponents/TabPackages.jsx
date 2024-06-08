@@ -52,7 +52,7 @@ const TabPackages = () => {
       </div>
       <div className="text-center mt-8">
         <button
-          onClick={() => navigate("/all-packages")}
+          onClick={() => navigate("/packages")}
           className="btn btn-secondary bg-secondary border-none text-white rounded-none"
         >
           All Packages

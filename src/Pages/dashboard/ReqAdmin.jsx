@@ -10,6 +10,7 @@ const ReqAdmin = () => {
   const axiosSecure = useAxiosSecure();
   const {
     data: newBieGuide = {},
+    refetch,
     isLoading,
     isError,
   } = useQuery({
@@ -33,7 +34,9 @@ const ReqAdmin = () => {
             title: "You applied to be a tour guide.",
             showConfirmButton: true,
           });
+          refetch()
         }
+
       })
       .catch((error) => toast("Error updating book numbers:", error));
   };
@@ -43,7 +46,7 @@ const ReqAdmin = () => {
       <div className="wrap bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% min-h-screen flex items-center justify-center">
         <div className="hero min-h-screen">
           <div className="hero-content text-center">
-            {newBieGuide.reqGuide === false ? (
+            {newBieGuide?.reqGuide === false ? (
               <div className="max-w-md">
                 <h1 className="text-5xl text-white  font-bold">
                   Hello {user.displayName}.
@@ -65,12 +68,19 @@ const ReqAdmin = () => {
                   <li className="step step-primary">Request Submitted.</li>
                   <li className="step step-primary">
                     <div className="flex items-center gap-1">
-                      {
-                        newBieGuide.guide === 'pending'?<div>Pending{" "}
-                        <div className="badge badge-warning badge-xs"></div></div>:newBieGuide.guide === "rejected" ?<div>rejected{" "}
-                        <div className="badge badge-accent badge-xs"></div></div>:<div>Congratulations!!.You are a guide now{" "}
+                      {newBieGuide.guide === "pending" ? (
+                        <div>
+                          Pending{" "}
+                          <div className="badge badge-warning badge-xs"></div>
                         </div>
-                      }
+                      ) : newBieGuide.guide === "rejected" ? (
+                        <div>
+                          rejected{" "}
+                          <div className="badge badge-accent badge-xs"></div>
+                        </div>
+                      ) : (
+                        <div>Congratulations!!.You are a guide now </div>
+                      )}
                     </div>
                   </li>
                   {/* {newBieGuide.guide !== "rejected" ? (

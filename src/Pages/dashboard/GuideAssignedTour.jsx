@@ -81,7 +81,7 @@ const GuideAssignedTour = () => {
     <div className="flex min-h-screen items-start pt-24 justify-center bg-gradient-to-r from-primary to-gray-400">
       <div className="w-4/5">
         <h1 className="font-bold text-white mb-12 text-3xl capitalize">
-          My Booking List
+          assigned tour on me
         </h1>
         <div className="wrap">
           <div className="overflow-x-auto">
@@ -101,7 +101,7 @@ const GuideAssignedTour = () => {
               </thead>
               <tbody>
                 {bookings.map((book, index) => (
-                  <tr key={book._id}>
+                  <tr key={book._id} className="text-white">
                     <th>{index + 1}</th>
                     <td>{book.packageName}</td>
                     <td>{book.price} BDT</td>
@@ -113,7 +113,7 @@ const GuideAssignedTour = () => {
                     <td>{book.status}</td>
                     <td>
                       <button
-                        disabled={book.status ==='accepted'}
+                        disabled={book.status ==='accepted'|| book.status ==='rejected'}
                         className={book.status !=='accepted'?"bg-green-500 text-white p-2 rounded-md":"bg-green-500 text-white p-2 rounded-md opacity-25 cursor-not-allowed"}
                         onClick={() => handleAccept(book._id)}
                       >

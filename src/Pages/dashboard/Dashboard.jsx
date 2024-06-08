@@ -1,5 +1,11 @@
 import React, { useContext, useState } from "react";
-import { FaBreadSlice, FaHiking, FaHome, FaShoppingCart, FaUserCog } from "react-icons/fa";
+import {
+  FaBreadSlice,
+  FaHiking,
+  FaHome,
+  FaShoppingCart,
+  FaUserCog,
+} from "react-icons/fa";
 import {
   FaBangladeshiTakaSign,
   FaBars,
@@ -100,20 +106,24 @@ const Dashboard = () => {
                   </li>
                   <li>
                     <NavLink to={"/dashboard/bookings"}>
-                    <MdChecklist /> My bookings
+                      <MdChecklist /> My bookings
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to={"/dashboard/bucket-list"}>
-                    <FaListCheck /> My Bucket List
+                      <FaListCheck /> My Bucket List
                     </NavLink>
                   </li>
-                  <li>
-                    <NavLink to={"/dashboard/request-admin"}>
-                      <FaUserCog />
-                      Request Admin
-                    </NavLink>
-                  </li>
+                  {isGuide === true ? (
+                    "asdfgadg"
+                  ) : (
+                    <li>
+                      <NavLink to={"/dashboard/request-admin"}>
+                        <FaUserCog />
+                        Request Admin
+                      </NavLink>
+                    </li>
+                  )}
                   <div className="divider"></div>
                 </>
               )}

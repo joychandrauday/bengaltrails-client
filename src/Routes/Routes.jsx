@@ -23,6 +23,7 @@ import BucketList from "../Pages/dashboard/BucketList";
 import ReqAdmin from "../Pages/dashboard/ReqAdmin";
 import GuideAssignedTour from "../Pages/dashboard/GuideAssignedTour";
 import ManageGuide from "../Pages/dashboard/ManageGuide";
+import AllPackages from "../Pages/AllPackages/AllPackages";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/blog",
         element: <Blog></Blog>,
+      },
+      {
+        path: "/packages",
+        element: <AllPackages></AllPackages>,
       },
       {
         path: "/story/:id",
