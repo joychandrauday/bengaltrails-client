@@ -47,6 +47,7 @@ const ManageGuide = () => {
         axiosSecure
           .patch(`/users/${id}`, {
             role: "user",
+            status: "rejected",
             guide: "none",
             reqGuide: true,
           })

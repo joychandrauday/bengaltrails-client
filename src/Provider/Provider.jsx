@@ -12,6 +12,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import axios from "axios";
+import useAxiosPublic from "../Hooks/useAxiosPublic copy";
 
 const auth = getAuth(app);
 export const AuthContext = createContext(null);
@@ -23,7 +24,7 @@ const Provider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [reload, setReload] = useState(false);
   const [loading, setLoading] = useState(true);
-  
+  const axiosPublic = useAxiosPublic();
   const userSignUp = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
@@ -36,12 +37,24 @@ const Provider = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      if (currentUser) {
+        //
+        const userInfo = { email: currentUser.email };
+        axiosPublic.post("/jwt", userInfo).then((res) => {
+          if (res.data.token) {
+            localStorage.setItem("access-token", res.data.token);
+          }
+        });
+      } else {
+        //
+        localStorage.removeItem('access-token')
+      }
       setLoading(false);
     });
     return () => {
       unSubscribe();
     };
-  }, [reload]);
+  }, [axiosPublic]);
   const signInUser = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);

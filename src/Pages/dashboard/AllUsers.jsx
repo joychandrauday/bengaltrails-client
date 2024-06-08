@@ -35,7 +35,7 @@ const AllUsers = () => {
   const { refetch, data: users = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/users");
+      const res = await axiosSecure.get("/all-users");
       return res.data;
     },
   });
@@ -146,7 +146,7 @@ const AllUsers = () => {
 
   const startIndex = (currentPage - 1) * usersPerPage;
   const currentUsers = filterUser.slice(startIndex, startIndex + usersPerPage);
-  
+
   return (
     <div className="bg-newsletter bg-cover bg-fixed bg-no-repeat bg-center pb-12 text-white min-h-screen">
       <div className="flex w-4/5 pt-16 mx-auto justify-center items-center">

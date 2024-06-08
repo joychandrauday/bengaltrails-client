@@ -6,9 +6,13 @@ import { getAuth } from "firebase/auth";
 import app from "../../Firebase/firebase.config";
 import axios from "axios";
 import { AwesomeButton } from "react-awesome-button";
+import useAdmin from "../../Hooks/useAdmin";
+import useGuide from "../../Hooks/useGuide";
 
 const auth = getAuth(app);
 const Header = () => {
+  const [isAdmin] = useAdmin();
+  const [isGuide] = useGuide();
   // const handleToggle = (e) => {
   //   if (e.target.checked) {
   //     setTheme("dark");
@@ -99,11 +103,17 @@ const Header = () => {
           {user ? (
             <div className="dropdown dropdown-hover dropdown-end relative ml-4">
               <div tabIndex={0} role="button" className="m-1">
-                <div className="w-12 relative">
+                <div className="w-12 relative ">
                   <img
                     alt="Tailwind CSS Navbar component"
                     src={user.photoURL}
                   />
+                  {
+                    isGuide ? <div className="badge hover:bg-primary badge-outline gap-1 text-white absolute top-0 font-bold"> <div className="badge badge-warning badge-xs"></div> guide</div>:''
+                  }
+                  {
+                    isAdmin ? <div className="badge hover:bg-primary badge-outline gap-1 text-white absolute top-0 font-bold"> <div className="badge badge-warning badge-xs"></div> Admin</div>:''
+                  }
                 </div>
               </div>
               <ul

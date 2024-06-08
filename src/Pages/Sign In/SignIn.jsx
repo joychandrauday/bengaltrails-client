@@ -11,9 +11,11 @@ import { AwesomeButton } from "react-awesome-button";
 
 import "react-awesome-button/dist/styles.css";
 import { BsGoogle } from "react-icons/bs";
+import useAxiosPublic from "../../Hooks/useAxiosPublic copy";
 
 const SignIn = () => {
   const location = useLocation();
+  const axiosPublic = useAxiosPublic();
   const {
     user,
     setUser,
@@ -37,7 +39,12 @@ const SignIn = () => {
         const user = userCredential.user;
         if (user) {
           navigate(location?.state ? location.state : "/");
-
+          const userInfo = { email: email };
+          axiosPublic.post("/jwt", userInfo).then((res) => {
+            if (res.data.token) {
+              localStorage.setItem("access-token", res.data.token);
+            }
+          });
           Swal.fire({
             position: "center",
             icon: "success",
@@ -63,6 +70,24 @@ const SignIn = () => {
   const handleGoogleLogin = () => {
     googleSignIn()
       .then((res) => {
+        const userInfo = {
+          name: res.user?.displayName,
+          email: res.user?.email,
+          image: res.user?.photoURL,
+          role: "user",
+          reqGuide: false,
+        };
+        axiosPublic.post("/users", userInfo).then((res) => {
+          if (res.data.insertedId) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "You are signed in!!",
+              showConfirmButton: true,
+              r,
+            });
+          }
+        });
         navigate(location?.state ? location.state : "/");
       })
       .catch((error) => {
@@ -151,8 +176,10 @@ const SignIn = () => {
                 <hr className="w-36 border-primary"></hr>
               </div>
               <div className="flex items-center justify-center py-4">
-                <BsGoogle className="text-3xl cursor-pointer" onClick={handleGoogleLogin}></BsGoogle>
-
+                <BsGoogle
+                  className="text-3xl cursor-pointer"
+                  onClick={handleGoogleLogin}
+                ></BsGoogle>
               </div>
             </div>
           </div>

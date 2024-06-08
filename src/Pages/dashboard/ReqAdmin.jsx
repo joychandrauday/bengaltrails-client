@@ -23,6 +23,7 @@ const ReqAdmin = () => {
   const handleReqAdmin = (id) => {
     axiosSecure
       .patch(`/users/${id}`, {
+        role:'user',
         guide: "pending",
         reqGuide: true,
       })

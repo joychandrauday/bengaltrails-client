@@ -7,7 +7,6 @@ import { useQuery } from "@tanstack/react-query";
 
 const Bookings = () => {
   const { user } = useContext(AuthContext);
-  const [booking, setbooking] = useState([]);
   const axiosSecure = useAxiosSecure();
   const email = user?.email;
   const { refetch, data: bookings = [] } = useQuery({

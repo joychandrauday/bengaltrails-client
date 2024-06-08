@@ -115,7 +115,7 @@ const Dashboard = () => {
                     </NavLink>
                   </li>
                   {isGuide === true ? (
-                    "asdfgadg"
+                    ""
                   ) : (
                     <li>
                       <NavLink to={"/dashboard/request-admin"}>
