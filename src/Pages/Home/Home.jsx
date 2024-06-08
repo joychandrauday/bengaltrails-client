@@ -1,19 +1,45 @@
 import React, { useContext, useEffect, useState } from "react";
-
-// import required modules
 import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../Provider/Provider";
 import { IoBicycleSharp } from "react-icons/io5";
 import { RiChatQuoteFill } from "react-icons/ri";
-
 import ReactPlayer from "react-player";
 import { Link } from "react-router-dom";
 import TourAndTravelGuide from "./HomeComponents/TourAndTravelGuide";
 import TourTypesSection from "./HomeComponents/TourTypesSection";
 import TravelStoriesSection from "./HomeComponents/TravelStoriesSection";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import './styles.css'
 
 const Home = () => {
   const { user } = useContext(AuthContext);
+
+  // Function to show a toast notification for offer announcements
+  const showNotification = (message) => {
+    toast.info(
+      <div className="z-[999999999] ">
+        <p>{message}</p>
+        <Link to={"dashboard/my-offers"} className="text-blue-500 underline">
+          Click here for more details
+        </Link>
+      </div>,
+      {
+        position: "top-right",
+        autoClose: 100000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: false,
+      }
+    );
+  };
+
+  useEffect(() => {
+    // Simulate an offer announcement after component mount
+    showNotification("New offers available!");
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -56,13 +82,17 @@ const Home = () => {
       <div className="tourismAndTravelGuide py-24">
         <TourAndTravelGuide></TourAndTravelGuide>
       </div>
-      <div className="py-24" style={{
-        'background':"linear-gradient(to bottom, rgb(0, 0, 0), rgba(57, 53, 53, 0.5)), url('https://i.ibb.co/zZ6r1xL/sabbir-rahaman-PAxutt-F3-Bv-Q-unsplash.jpg')",
-        'backgroundPosition':'center center',
-        'backgroundRepeat':'no-repeat',
-        'backgroundSize':'cover',
-        'backgroundAttachment':'fixed'
-      }}>
+      <div
+        className="py-24"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgb(0, 0, 0), rgba(57, 53, 53, 0.5)), url('https://i.ibb.co/zZ6r1xL/sabbir-rahaman-PAxutt-F3-Bv-Q-unsplash.jpg')",
+          backgroundPosition: "center center",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundAttachment: "fixed",
+        }}
+      >
         <TourTypesSection></TourTypesSection>
       </div>
       <div className="py-12">

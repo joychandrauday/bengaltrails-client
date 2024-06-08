@@ -27,6 +27,10 @@
 .html5-video-player .video-click-tracking, .html5-video-player .video-stream{
   height: 650px !important;
 }
+.Toastify__toast-container--top-right{
+  z-index: 9999999 !important;
+  margin-top: 24px;
+}
   @media (max-width: 576px) { 
     .slideheight{
       height: 50vh !important;
