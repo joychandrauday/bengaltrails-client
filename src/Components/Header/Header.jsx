@@ -109,10 +109,10 @@ const Header = () => {
                     src={user.photoURL}
                   />
                   {
-                    isGuide ? <div className="badge hover:bg-primary badge-outline gap-1 text-white absolute top-0 font-bold"> <div className="badge badge-warning badge-xs"></div> guide</div>:''
+                    isGuide ? <div className="badge hover:bg-primary badge-accent gap-1 text-white absolute bottom-0 font-bold right-0"> guide</div>:''
                   }
                   {
-                    isAdmin ? <div className="badge hover:bg-primary badge-outline gap-1 text-white absolute top-0 font-bold"> <div className="badge badge-warning badge-xs"></div> Admin</div>:''
+                    isAdmin ? <div className="badge hover:bg-primary badge-accent gap-1 text-white absolute right-0 bottom-0 font-bold"> Admin</div>:''
                   }
                 </div>
               </div>

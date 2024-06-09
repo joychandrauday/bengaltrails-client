@@ -39,8 +39,9 @@ const SignIn = () => {
         const user = userCredential.user;
         if (user) {
           navigate(location?.state ? location.state : "/");
-          const userInfo = { email: email };
-          axiosPublic.post("/jwt", userInfo).then((res) => {
+          const user = { email: email };
+          axiosPublic.post("/jwt", user).then((res) => {
+            console.log(res);
             if (res.data.token) {
               localStorage.setItem("access-token", res.data.token);
             }

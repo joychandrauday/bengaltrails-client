@@ -38,7 +38,7 @@ const Blog = () => {
         breadCrumbs={"blog"}
       ></PageHeader>
 
-      <div className="grid justify-items-center lg:grid-cols-3 gap-4 py-12 container mx-auto">
+      <div className="grid justify-items-center lg:grid-cols-3 md:grid-cols-2 gap-4 py-12 container mx-auto">
         {travelStories.map((blog) => (
           <BlogCard key={blog?._id} blog={blog}></BlogCard>
         ))}

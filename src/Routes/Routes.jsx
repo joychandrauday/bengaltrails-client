@@ -27,6 +27,7 @@ import AllPackages from "../Pages/AllPackages/AllPackages";
 import MyOffer from './../Pages/dashboard/MyOffer';
 import Contact from "../Pages/Contact/Contact";
 import About from "../Pages/About us/About";
+import UpdateGuidePreofile from "../Pages/dashboard/UpdateGuidePreofile";
 
 const router = createBrowserRouter([
   {
@@ -119,6 +120,10 @@ const router = createBrowserRouter([
       {
         path: "assigned",
         element: <GuideAssignedTour></GuideAssignedTour>,
+      },
+      {
+        path: "update-profile",
+        element: <UpdateGuidePreofile></UpdateGuidePreofile>,
       },
       {
         path: "add-package",

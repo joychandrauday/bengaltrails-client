@@ -24,11 +24,11 @@ import { BsArrowLeft, BsArrowLeftCircle } from "react-icons/bs";
 import { IoMdArrowDropleftCircle } from "react-icons/io";
 import useAdmin from "../../Hooks/useAdmin";
 import useGuide from "../../Hooks/useGuide";
-import { GiForkKnifeSpoon, GiSpoon } from "react-icons/gi";
+import { GiForkKnifeSpoon, GiPaperBagOpen, GiSpoon } from "react-icons/gi";
 import { AuthContext } from "../../Provider/Provider";
 import { PiBriefcaseFill } from "react-icons/pi";
 import { FcSerialTasks } from "react-icons/fc";
-import { MdChecklist } from "react-icons/md";
+import { MdChecklist, MdEditNote } from "react-icons/md";
 
 const Dashboard = () => {
   //admin management
@@ -132,6 +132,12 @@ const Dashboard = () => {
                   <li>
                     <NavLink to={"/dashboard/profile"}>
                       <FaUserPlus /> My Profile
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to={"/dashboard/update-profile"}>
+                      <MdEditNote />
+                      Update Guide profile 
                     </NavLink>
                   </li>
                   <li>

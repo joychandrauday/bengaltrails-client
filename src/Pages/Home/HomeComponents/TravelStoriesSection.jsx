@@ -34,7 +34,7 @@ const TravelStoriesSection = () => {
       <h1 className="font-extrabold container mx-auto text-center capitalize text-4xl text-primary">
         travel stories by user
       </h1>
-      <div className="grid lg:grid-cols-3 gap-2 justify-center content-center justify-items-center pt-12 items-center">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-2 justify-center content-center justify-items-center pt-12 items-center">
         {travelStories.slice(0, 4).map((blog) => (
           <BlogCard key={blog._id} blog={blog}></BlogCard>
         ))}

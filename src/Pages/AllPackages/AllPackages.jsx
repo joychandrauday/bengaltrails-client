@@ -37,7 +37,7 @@ const AllPackages = () => {
         breadCrumbs={"packages"}
       ></PageHeader>
 
-      <div className="grid lg:grid-cols-3 gap-4 py-12 container justify-items-center mx-auto">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4 py-12 container justify-items-center mx-auto">
         {packages.map((pack) => (
           <PackageCard key={pack._id} pack={pack}></PackageCard>
         ))}
