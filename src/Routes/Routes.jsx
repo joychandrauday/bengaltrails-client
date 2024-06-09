@@ -25,6 +25,7 @@ import GuideAssignedTour from "../Pages/dashboard/GuideAssignedTour";
 import ManageGuide from "../Pages/dashboard/ManageGuide";
 import AllPackages from "../Pages/AllPackages/AllPackages";
 import MyOffer from './../Pages/dashboard/MyOffer';
+import Contact from "../Pages/Contact/Contact";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/packages",
         element: <AllPackages></AllPackages>,
+      },
+      {
+        path: "/contact",
+        element: <Contact></Contact>,
       },
       {
         path: "/story/:id",
