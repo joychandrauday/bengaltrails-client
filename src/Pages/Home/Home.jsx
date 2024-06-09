@@ -11,9 +11,12 @@ import TravelStoriesSection from "./HomeComponents/TravelStoriesSection";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles.css";
+import { motion, useViewportScroll, useTransform } from "framer-motion";
 
 const Home = () => {
   const { user } = useContext(AuthContext);
+  const { scrollYProgress } = useViewportScroll();
+  const scale = useTransform(scrollYProgress, [0, 1], [0.0, 1]);
 
  
   return (
@@ -54,7 +57,23 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="tourismAndTravelGuide py-24">
+      <div className="wrapperr">
+      <motion.div
+        className="containerrr z-[-99999]"
+        style={{
+          scale
+        }}
+      >
+        <motion.div
+          className="items"
+          style={{
+            scaleY: scrollYProgress
+          }}
+        />
+        <img src="https://i.ibb.co/3sHrxyW/Blue-Yellow-Simple-Tour-And-Travel-Logo-2.png" alt="" />
+      </motion.div>
+      </div>
+      <div className="tourismAndTravelGuide py-24 z-[999]">
         <TourAndTravelGuide></TourAndTravelGuide>
       </div>
       <div

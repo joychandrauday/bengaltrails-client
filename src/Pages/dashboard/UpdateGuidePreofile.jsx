@@ -1,37 +1,82 @@
 import React, { useContext } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../Provider/Provider";
-import useGuide from '../../Hooks/useGuide'
 
 const UpdateGuideProfile = () => {
   const { user } = useContext(AuthContext);
-  const email=user?.email;
-  console.log(user.email);
   const axiosSecure = useAxiosSecure();
-  
+  const email = user?.email;
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    alert("Profile updated successfully!");
-  };
+  // useFieldArray hooks for dynamic fields
   const {
-    data: guide = [],
+    fields: languageFields,
+    append: appendLanguage,
+    remove: removeLanguage,
+  } = useFieldArray({
+    control,
+    name: "languages",
+  });
+  const {
+    fields: specialtyFields,
+    append: appendSpecialty,
+    remove: removeSpecialty,
+  } = useFieldArray({
+    control,
+    name: "specialties",
+  });
+  const {
+    fields: educationFields,
+    append: appendEducation,
+    remove: removeEducation,
+  } = useFieldArray({
+    control,
+    name: "education",
+  });
+  const {
+    fields: skillFields,
+    append: appendSkill,
+    remove: removeSkill,
+  } = useFieldArray({
+    control,
+    name: "skills",
+  });
+  const {
+    fields: workExperienceFields,
+    append: appendWorkExperience,
+    remove: removeWorkExperience,
+  } = useFieldArray({
+    control,
+    name: "workExperience",
+  });
+
+  const onSubmit = async (data) => {
+    console.log(data);
+
+    const res = axiosSecure.patch(`guides/${guide._id}`, data);
+    console.log(res);
+  };
+
+  const {
+    data: guide = {},
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["guide"],
+    queryKey: ["guide", email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/guide?email=${email}`);
       return res.data;
     },
+    enabled: !!email, // Only run the query if email exists
   });
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -41,9 +86,28 @@ const UpdateGuideProfile = () => {
   }
 
   if (isError) {
-    return <div>Error fetching packages data</div>;
+    return <div>Error fetching guide data</div>;
   }
-  console.log(guide);
+
+  // Set default values for the form
+  const defaultValues = {
+    guideName: guide.guideName || "",
+    profileUrl: guide.profileUrl || "",
+    experience: guide.experience || "",
+    languages: guide.languages || [""], // Ensure at least one field
+    specialties: guide.specialties || [""], // Ensure at least one field
+    bio: guide.bio || "",
+    imageUrl: guide.imageUrl || "",
+    contactDetails: {
+      email: guide.contactDetails?.email || "",
+      phone: guide.contactDetails?.phone || "",
+      address: guide.contactDetails?.address || "",
+    },
+    education: guide.education || [""], // Ensure at least one field
+    skills: guide.skills || [""], // Ensure at least one field
+    workExperience: guide.workExperience || [""], // Ensure at least one field
+  };
+
   return (
     <div className="min-h-screen bg-secondary p-6">
       <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
@@ -54,11 +118,11 @@ const UpdateGuideProfile = () => {
               <label className="block text-gray-700">Guide Name</label>
               <input
                 type="text"
+                defaultValue={defaultValues.guideName}
                 {...register("guideName", { required: true })}
                 className={`w-full p-2 border ${
                   errors.guideName ? "border-red-500" : "border-gray-300"
                 } rounded`}
-                defaultValue={guide?.guideName}
               />
               {errors.guideName && (
                 <p className="text-red-500 text-sm">Guide name is required</p>
@@ -69,11 +133,11 @@ const UpdateGuideProfile = () => {
               <label className="block text-gray-700">Profile URL</label>
               <input
                 type="text"
+                defaultValue={defaultValues.profileUrl}
                 {...register("profileUrl", { required: true })}
                 className={`w-full p-2 border ${
                   errors.profileUrl ? "border-red-500" : "border-gray-300"
                 } rounded`}
-                defaultValue={guide?.profileUrl}
               />
               {errors.profileUrl && (
                 <p className="text-red-500 text-sm">Profile URL is required</p>
@@ -81,36 +145,37 @@ const UpdateGuideProfile = () => {
             </div>
 
             <div>
-              <label className="block text-gray-700">Experience</label>
-              <input
-                type="text"
-                {...register("experience", { required: true })}
-                className={`w-full p-2 border ${
-                  errors.experience ? "border-red-500" : "border-gray-300"
-                } rounded`}
-                defaultValue={guide?.experience}
-              />
-              {errors.experience && (
-                <p className="text-red-500 text-sm">Experience is required</p>
-              )}
-            </div>
-
-            <div>
               <label className="block text-gray-700">Languages</label>
               <div className="space-y-2">
-                {guide?.languages.map((field, index) => (
+                {languageFields.map((field, index) => (
                   <div key={field.id} className="flex items-center">
                     <input
                       type="text"
                       defaultValue={field.value}
                       {...register(`languages.${index}`, { required: true })}
-                      className={`w-full p-2 border ${errors.languages && errors.languages[index] ? "border-red-500" : "border-gray-300"} rounded`}
+                      className={`w-full p-2 border ${
+                        errors.languages && errors.languages[index]
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      } rounded`}
                       placeholder="Language"
                     />
-                    <button type="button" className="ml-2 bg-red-500 text-white px-2 py-1 rounded" onClick={() => remove(index)}>Remove</button>
+                    <button
+                      type="button"
+                      className="ml-2 bg-red-500 text-white px-2 py-1 rounded"
+                      onClick={() => removeLanguage(index)}
+                    >
+                      Remove
+                    </button>
                   </div>
                 ))}
-                <button type="button" className="mt-2 bg-blue-500 text-white px-2 py-1 rounded" onClick={() => append({ value: "" })}>Add Language</button>
+                <button
+                  type="button"
+                  className="mt-2 bg-blue-500 text-white px-2 py-1 rounded"
+                  onClick={() => appendLanguage({ value: "" })}
+                >
+                  Add Language
+                </button>
               </div>
               {errors.languages && (
                 <p className="text-red-500 text-sm">Languages are required</p>
@@ -119,14 +184,37 @@ const UpdateGuideProfile = () => {
 
             <div>
               <label className="block text-gray-700">Specialties</label>
-              <input
-                type="text"
-                {...register("specialties", { required: true })}
-                className={`w-full p-2 border ${
-                  errors.specialties ? "border-red-500" : "border-gray-300"
-                } rounded`}
-                placeholder="Separate with commas, e.g., Bird Watching Tours, Nature Tours"
-              />
+              <div className="space-y-2">
+                {specialtyFields.map((field, index) => (
+                  <div key={field.id} className="flex items-center">
+                    <input
+                      type="text"
+                      defaultValue={field.value}
+                      {...register(`specialties.${index}`, { required: true })}
+                      className={`w-full p-2 border ${
+                        errors.specialties && errors.specialties[index]
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      } rounded`}
+                      placeholder="Specialty"
+                    />
+                    <button
+                      type="button"
+                      className="ml-2 bg-red-500 text-white px-2 py-1 rounded"
+                      onClick={() => removeSpecialty(index)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  className="mt-2 bg-blue-500 text-white px-2 py-1 rounded"
+                  onClick={() => appendSpecialty({ value: "" })}
+                >
+                  Add Specialty
+                </button>
+              </div>
               {errors.specialties && (
                 <p className="text-red-500 text-sm">Specialties are required</p>
               )}
@@ -135,6 +223,7 @@ const UpdateGuideProfile = () => {
             <div>
               <label className="block text-gray-700">Bio</label>
               <textarea
+                defaultValue={defaultValues.bio}
                 {...register("bio", { required: true })}
                 className={`w-full p-2 border ${
                   errors.bio ? "border-red-500" : "border-gray-300"
@@ -150,6 +239,7 @@ const UpdateGuideProfile = () => {
               <label className="block text-gray-700">Image URL</label>
               <input
                 type="text"
+                defaultValue={defaultValues.imageUrl}
                 {...register("imageUrl", { required: true })}
                 className={`w-full p-2 border ${
                   errors.imageUrl ? "border-red-500" : "border-gray-300"
@@ -166,7 +256,8 @@ const UpdateGuideProfile = () => {
               <label className="block text-gray-700">Email</label>
               <input
                 type="email"
-                {...register("contactDetails.email", { required: true })}
+                defaultValue={email}
+                readOnly
                 className={`w-full p-2 border ${
                   errors.contactDetails?.email
                     ? "border-red-500"
@@ -177,11 +268,11 @@ const UpdateGuideProfile = () => {
                 <p className="text-red-500 text-sm">Email is required</p>
               )}
             </div>
-
             <div>
               <label className="block text-gray-700">Phone</label>
               <input
                 type="tel"
+                defaultValue={defaultValues.contactDetails.phone}
                 {...register("contactDetails.phone", { required: true })}
                 className={`w-full p-2 border ${
                   errors.contactDetails?.phone
@@ -198,6 +289,7 @@ const UpdateGuideProfile = () => {
               <label className="block text-gray-700">Address</label>
               <input
                 type="text"
+                defaultValue={defaultValues.contactDetails.address}
                 {...register("contactDetails.address", { required: true })}
                 className={`w-full p-2 border ${
                   errors.contactDetails?.address
@@ -212,14 +304,67 @@ const UpdateGuideProfile = () => {
 
             <div>
               <label className="block text-gray-700">Education</label>
-              <textarea
-                {...register("education", { required: true })}
-                className={`w-full p-2 border ${
-                  errors.education ? "border-red-500" : "border-gray-300"
-                } rounded`}
-                placeholder="Format: Degree - University - Year. Separate multiple entries with a semicolon."
-                rows="2"
-              ></textarea>
+              <div className="space-y-2">
+                {educationFields.map((field, index) => (
+                  <div key={field.id} className="flex items-center">
+                    <input
+                      type="text"
+                      defaultValue={field.degree}
+                      {...register(`education.${index}.degree`, {
+                        required: true,
+                      })}
+                      className={`w-full p-2 border ${
+                        errors.education && errors.education[index]
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      } rounded`}
+                      placeholder="Degree"
+                    />
+                    <input
+                      type="text"
+                      defaultValue={field.university}
+                      {...register(`education.${index}.university`, {
+                        required: true,
+                      })}
+                      className={`w-full p-2 border ${
+                        errors.education && errors.education[index]
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      } rounded`}
+                      placeholder="University"
+                    />
+                    <input
+                      type="text"
+                      defaultValue={field.year}
+                      {...register(`education.${index}.year`, {
+                        required: true,
+                      })}
+                      className={`w-full p-2 border ${
+                        errors.education && errors.education[index]
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      } rounded`}
+                      placeholder="Year"
+                    />
+                    <button
+                      type="button"
+                      className="ml-2 bg-red-500 text-white px-2 py-1 rounded"
+                      onClick={() => removeEducation(index)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  className="mt-2 bg-blue-500 text-white px-2 py-1 rounded"
+                  onClick={() =>
+                    appendEducation({ degree: "", university: "", year: "" })
+                  }
+                >
+                  Add Education
+                </button>
+              </div>
               {errors.education && (
                 <p className="text-red-500 text-sm">Education is required</p>
               )}
@@ -227,14 +372,37 @@ const UpdateGuideProfile = () => {
 
             <div>
               <label className="block text-gray-700">Skills</label>
-              <input
-                type="text"
-                {...register("skills", { required: true })}
-                className={`w-full p-2 border ${
-                  errors.skills ? "border-red-500" : "border-gray-300"
-                } rounded`}
-                placeholder="Separate with commas, e.g., Biology, Ecology, Bird Watching, Nature Guiding"
-              />
+              <div className="space-y-2">
+                {skillFields.map((field, index) => (
+                  <div key={field.id} className="flex items-center">
+                    <input
+                      type="text"
+                      defaultValue={field.value}
+                      {...register(`skills.${index}`, { required: true })}
+                      className={`w-full p-2 border ${
+                        errors.skills && errors.skills[index]
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      } rounded`}
+                      placeholder="Skill"
+                    />
+                    <button
+                      type="button"
+                      className="ml-2 bg-red-500 text-white px-2 py-1 rounded"
+                      onClick={() => removeSkill(index)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  className="mt-2 bg-blue-500 text-white px-2 py-1 rounded"
+                  onClick={() => appendSkill({ value: "" })}
+                >
+                  Add Skill
+                </button>
+              </div>
               {errors.skills && (
                 <p className="text-red-500 text-sm">Skills are required</p>
               )}
@@ -242,28 +410,87 @@ const UpdateGuideProfile = () => {
 
             <div>
               <label className="block text-gray-700">Work Experience</label>
-              <textarea
-                {...register("workExperience", { required: true })}
-                className={`w-full p-2 border ${
-                  errors.workExperience ? "border-red-500" : "border-gray-300"
-                } rounded`}
-                placeholder="Format: Position - Organization - Duration. Separate multiple entries with a semicolon."
-                rows="2"
-              ></textarea>
+              <div className="space-y-2">
+                {workExperienceFields.map((field, index) => (
+                  <div key={field.id} className="flex items-center">
+                    <input
+                      type="text"
+                      defaultValue={field.position}
+                      {...register(`workExperience.${index}.position`, {
+                        required: true,
+                      })}
+                      className={`w-full p-2 border ${
+                        errors.workExperience && errors.workExperience[index]
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      } rounded`}
+                      placeholder="Position"
+                    />
+                    <input
+                      type="text"
+                      defaultValue={field.organization}
+                      {...register(`workExperience.${index}.organization`, {
+                        required: true,
+                      })}
+                      className={`w-full p-2 border ${
+                        errors.workExperience && errors.workExperience[index]
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      } rounded`}
+                      placeholder="Organization"
+                    />
+                    <input
+                      type="text"
+                      defaultValue={field.duration}
+                      {...register(`workExperience.${index}.duration`, {
+                        required: true,
+                      })}
+                      className={`w-full p-2 border ${
+                        errors.workExperience && errors.workExperience[index]
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      } rounded`}
+                      placeholder="Duration"
+                    />
+                    <button
+                      type="button"
+                      className="ml-2 bg-red-500 text-white px-2 py-1 rounded"
+                      onClick={() => removeWorkExperience(index)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  className="mt-2 bg-blue-500 text-white px-2 py-1 rounded"
+                  onClick={() =>
+                    appendWorkExperience({
+                      position: "",
+                      organization: "",
+                      duration: "",
+                    })
+                  }
+                >
+                  Add Work Experience
+                </button>
+              </div>
               {errors.workExperience && (
                 <p className="text-red-500 text-sm">
-                  Work experience is required
+                  Work Experience is required
                 </p>
               )}
             </div>
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-primary text-white p-2 rounded-none hover:bg-blue-700 transition-colors"
-          >
-            Update Profile
-          </button>
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              Update Profile
+            </button>
+          </div>
         </form>
       </div>
     </div>

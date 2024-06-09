@@ -111,13 +111,61 @@ const AllUsers = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure
-          .patch(`/users/admin/${id}`)
+          .patch(`users/${id}`,{
+            role:'admin',
+            guide:'none',
+            reqGuide: false
+          })
           .then((res) => {
             if (res.data?.modifiedCount > 0) {
               refetch();
               Swal.fire({
                 title: "made admin!",
                 text: "the user has been made an admin.",
+                icon: "success",
+              });
+            } else {
+              Swal.fire({
+                title: "Error",
+                text: "Some Error occured.",
+                icon: "error",
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Error deleting book:", error);
+            Swal.fire({
+              title: "Error",
+              text: "An error occurred while making the user admin.",
+              icon: "error",
+            });
+          });
+      }
+    });
+  };
+  const handleMakeGuide = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .patch(`users/${id}`,{
+            role:'guide',
+            guide:'approved',
+            reqGuide: true
+          })
+          .then((res) => {
+            if (res.data?.modifiedCount > 0) {
+              refetch();
+              Swal.fire({
+                title: "made guide!",
+                text: "the user has been made an guide.",
                 icon: "success",
               });
             } else {
@@ -193,6 +241,7 @@ const AllUsers = () => {
                 <td>{user.role}</td>
                 <td className="gap-2 flex">
                   <button
+                  disabled={user.role === "admin"}
                     className="btn btn-warning bg-transparent"
                     onClick={() => handleDelete(user?._id)}
                   >
@@ -204,13 +253,17 @@ const AllUsers = () => {
                     className="btn btn-warning bg-transparent tooltip tooltip-top"
                     onClick={() => handleMakeAdmin(user?._id)}
                   >
-                    {user.role === "admin" ? (
-                      "admin"
-                    ) : user.role === "guide" ? (
-                      <FaHiking className="text-white text-xl" />
-                    ) : (
-                      <FaUserCog className="text-white text-xl" />
-                    )}
+                    <FaUserCog className="text-white text-xl" />
+                   
+                  </button>
+                  <button
+                    data-tip="make guide"
+                    disabled={user.role === "admin" || user.role === "guide" }
+                    className="btn btn-warning bg-transparent tooltip tooltip-top"
+                    onClick={() => handleMakeGuide(user?._id)}
+                  >
+                    <FaHiking className="text-white text-xl" />
+                   
                   </button>
                 </td>
               </tr>

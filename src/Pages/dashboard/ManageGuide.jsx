@@ -79,7 +79,7 @@ const ManageGuide = () => {
     });
   };
 
-  const handleMakeGuide = (id) => {
+  const handleMakeGuide = (id,email,name) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -99,9 +99,13 @@ const ManageGuide = () => {
           .then((res) => {
             if (res.data?.modifiedCount > 0) {
               refetch();
+              axiosSecure.post('/guides',{
+                guideEmail: email,
+                guideName: name
+              })
               Swal.fire({
-                title: "made admin!",
-                text: "the user has been made an admin.",
+                title: "made guide!",
+                text: "the user has been made an guide.",
                 icon: "success",
               });
             } else {
@@ -210,7 +214,7 @@ const ManageGuide = () => {
                         ? "text-gray-400 opacity-50 cursor-not-allowed"
                         : "bg-transparent tooltip tooltip-top "
                     }
-                    onClick={() => handleMakeGuide(user?._id)}
+                    onClick={() => handleMakeGuide(user?._id,user.email,user.name)}
                   >
                     <IoMdCheckmarkCircle className="text-3xl hover:text-warning  "></IoMdCheckmarkCircle>
                   </button>

@@ -70,6 +70,16 @@ const Bookings = () => {
       }
     });
   };
+  const handlePay =(image,title)=>{
+    Swal.fire({
+      title: `${title}`,
+      text: "book the package",
+      imageUrl: `${image}`,
+      imageWidth: 400,
+      imageHeight: 200,
+      imageAlt: "Custom image"
+    });
+  }
   return (
     <div>
       <div className="min-h-screen flex items-start py-12 justify-center bg-gradient-to-r from-primary to-gray-400">
@@ -78,7 +88,7 @@ const Bookings = () => {
             My booking List
           </h1>
           <div className="overflow-x-auto">
-            <table className="table">
+            <table className="table w-8/12 mx-auto">
               {/* head */}
               <thead>
                 <tr className="text-white">
@@ -120,7 +130,7 @@ const Bookings = () => {
                         <div className="badge badge-warning badge-xs"></div>
                       </div>
                     </td>
-                    <th className="flex items-center gap-2">
+                    <td className="text-center">
                       <button
                         disabled={booking.status!=='pending'}
                         className="btn btn-circle btn-outline btn-sm "
@@ -141,7 +151,14 @@ const Bookings = () => {
                           />
                         </svg>
                       </button>
-                    </th>
+                      <button
+                        disabled={booking.status!=='accepted'}
+                        className="btn bg-primary text-center border-none rounded-none text-white "
+                        onClick={() => handlePay(booking?.tourFeaturedPhoto,booking?.packageName)}
+                      >
+                        Pay now
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

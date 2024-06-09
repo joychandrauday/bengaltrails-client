@@ -4,6 +4,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import UpdateGuideProfile from "./UpdateGuidePreofile";
 
 const ReqAdmin = () => {
   const { user } = useContext(AuthContext);
@@ -79,30 +80,23 @@ const ReqAdmin = () => {
                           rejected{" "}
                           <div className="badge badge-accent badge-xs"></div>
                         </div>
-                      ) : (
-                        <div>Congratulations!!.You are a guide now </div>
-                      )}
+                      ) :newBieGuide.guide === "approved" ? (
+                        <div>Congratulations!!.You are a guide now. fill the form below</div>
+                      ):''}
                     </div>
                   </li>
-                  {/* {newBieGuide.guide !== "rejected" ? (
-                    <li className="step step-primary">rejected</li>
-                  ) :newBieGuide.guide === "pending" ? (
-                    ''
-                  ) :(
-                    <li className="step step-primary">
-                      Congratulations!!.You are a guide now{" "}
-                    </li>
-                  )}
-                  {/* {
-                    newBieGuide.guide==='approved'?
-                    :''
-                  } */}
+
                 </ul>
               </div>
             )}
           </div>
         </div>
       </div>
+      {
+        newBieGuide.guide === "approved"?
+        <UpdateGuideProfile></UpdateGuideProfile>
+        :''
+      }
     </div>
   );
 };

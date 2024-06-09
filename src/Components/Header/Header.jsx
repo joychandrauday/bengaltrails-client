@@ -83,7 +83,7 @@ const Header = () => {
             <img
               src="https://i.ibb.co/94N1vNb/Blue-Yellow-Simple-Tour-And-Travel-Logo-3-1.png"
               alt=""
-              className="lg:w-3/5 max-w-[150px]"
+              className="lg:max-w-[250px] max-w-[150px]"
             />
           </NavLink>
         </div>
