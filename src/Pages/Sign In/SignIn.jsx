@@ -41,7 +41,7 @@ const SignIn = () => {
           navigate(location?.state ? location.state : "/");
           const user = { email: email };
           axiosPublic.post("/jwt", user).then((res) => {
-            console.log(res);
+            
             if (res.data.token) {
               localStorage.setItem("access-token", res.data.token);
             }
@@ -57,7 +57,7 @@ const SignIn = () => {
       })
       .catch((error) => {
         const errorMessage = error.message;
-        console.log(errorMessage);
+        
         if (error) {
           Swal.fire({
             icon: "error",

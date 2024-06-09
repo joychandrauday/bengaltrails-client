@@ -15,7 +15,6 @@ const AdminHome = () => {
       return res.data;
     },
   });
-  console.log(stats);
   return (
     <div>
       <div className="mainpage min-h-screen flex items-center justify-center">

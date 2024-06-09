@@ -58,10 +58,9 @@ const UpdateGuideProfile = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
 
     const res = axiosSecure.patch(`guides/${guide._id}`, data);
-    console.log(res);
+    
   };
 
   const {

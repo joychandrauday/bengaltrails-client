@@ -30,7 +30,6 @@ const GuideAssignedTour = () => {
   if (isError) {
     return <div>Error fetching bookings</div>;
   }
-  console.log(user.user);
   const handleAccept = (id) => {
     Swal.fire({
       title: "Are you sure?",

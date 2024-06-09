@@ -38,7 +38,7 @@ const Dashboard = () => {
   const { logOut } = useContext(AuthContext);
   // const navigate =useNavigate()
   const { user } = useContext(AuthContext);
-  console.log(isGuide);
+  
   return (
     <div className="">
       <div className="">

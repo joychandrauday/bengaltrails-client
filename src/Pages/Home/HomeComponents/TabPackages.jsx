@@ -23,7 +23,7 @@ const TabPackages = () => {
 
   const handleWishlistClick = (packageId) => {
     // Add the package to the user's wishlist logic here
-    console.log(`Added package ${packageId} to wishlist`);
+    
   };
 
   const handleViewPackageClick = (packageId) => {
@@ -41,7 +41,6 @@ const TabPackages = () => {
   if (isError) {
     return <div>Error fetching packages data</div>;
   }
-  console.log(packages);
   return (
     <div className="container mx-auto py-8">
       <h2 className="text-3xl font-bold text-center mb-8">Featured Packages</h2>

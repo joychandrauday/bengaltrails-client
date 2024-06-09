@@ -19,7 +19,6 @@ const PackageDetails = () => {
   const { user } = useContext(AuthContext);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const navigate = useNavigate();
-  console.log(user);
   const [bookingDate, setBookingDate] = useState();
   const [formError, setFormError] = useState(null);
   const {
@@ -69,8 +68,7 @@ const PackageDetails = () => {
     },
   });
 
-  console.log("isLoading:", isLoading);
-  console.log("isError:", isError);
+  
 
   if (isLoading) {
     return (
@@ -101,11 +99,10 @@ const PackageDetails = () => {
     caption: "Image Caption Here",
   }));
 
-  console.log("modalIsOpen:", modalIsOpen);
+  
 
   const onSubmit = async (data) => {
-    // Handle form submission
-    console.log("Form submitted:", data); // Data contains all form values
+    
 
     // Simulate a successful form submission to the server
     // You can replace this with your actual API call

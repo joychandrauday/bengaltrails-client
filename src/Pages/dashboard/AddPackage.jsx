@@ -10,10 +10,8 @@ const AddPackage = () => {
   const axiosSecure = useAxiosSecure();
 
   const onSubmit = async (data) => {
-    console.log(data);
     // You can send the form data to your backend or process it as needed
     const menuRes = await axiosSecure.post("/packages", data);
-    console.log(menuRes.data);
     if (menuRes.data.insertedId) {
       Swal.fire({
         position: "center",

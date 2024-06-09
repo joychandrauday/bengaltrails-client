@@ -42,7 +42,6 @@ const ReqAdmin = () => {
       })
       .catch((error) => toast("Error updating book numbers:", error));
   };
-  console.log(newBieGuide);
   return (
     <div className="">
       <div className="wrap bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% min-h-screen flex items-center justify-center">

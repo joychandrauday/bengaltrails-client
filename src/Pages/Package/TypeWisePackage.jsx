@@ -10,7 +10,6 @@ const TypeWisePackage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const type = useParams();
-  console.log(type);
   useEffect(() => {
     const fetchTypeWise = async () => {
       try {
