@@ -45,7 +45,7 @@ const TabPackages = () => {
   return (
     <div className="container mx-auto py-8">
       <h2 className="text-3xl font-bold text-center mb-8">Featured Packages</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center justify-items-center">
         {packages.slice(0, 3).map((pack) => (
           <PackageCard key={pack._id} pack={pack}></PackageCard>
         ))}

@@ -134,13 +134,12 @@ const ManageGuide = () => {
   return (
     <div className="bg-newsletter bg-cover bg-fixed bg-no-repeat bg-center pb-12 text-white min-h-screen">
       <div className="flex w-4/5 pt-16 mx-auto justify-center items-center">
-        <h1 className="basis-2/3 capitalize font-bold text-3xl">all guide request.</h1>
-        <h1 className="basis-1/3 capitalize font-bold text-3xl">
+        <h1 className="basis-2/3 capitalize font-bold lg:text-3xl text-xl">all guide request.</h1>
+        <h1 className="basis-1/3 capitalize font-bold lg:text-3xl text-xl">
           total guide request ({users?.length})
         </h1>
       </div>
-      <div className="overflow-x-auto w-4/5 mx-auto">
-        <div className="flex items-center gap-4">
+        <div className="flex justify-center items-center gap-4">
           <input
             type="text"
             placeholder="Search by name or email"
@@ -149,6 +148,7 @@ const ManageGuide = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
+      <div className="overflow-x-auto w-4/5 mx-auto">
         <table className="table text-white w-full text-xl text-left">
           <thead>
             <tr className="text-white">

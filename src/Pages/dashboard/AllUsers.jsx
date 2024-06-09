@@ -150,30 +150,30 @@ const AllUsers = () => {
   return (
     <div className="bg-newsletter bg-cover bg-fixed bg-no-repeat bg-center pb-12 text-white min-h-screen">
       <div className="flex w-4/5 pt-16 mx-auto justify-center items-center">
-        <h1 className="basis-2/3 capitalize font-bold text-3xl">all users</h1>
-        <h1 className="basis-1/3 capitalize font-bold text-3xl">
+        <h1 className="basis-2/3 capitalize font-bold lg:text-3xl text-xl">all users</h1>
+        <h1 className="basis-1/3 capitalize font-bold lg:text-3xl text-xl">
           total users({users?.length})
         </h1>
       </div>
+      <div className="flex items-center justify-center gap-4">
+        <Select
+          options={roleOptions}
+          placeholder="Filter by role"
+          isClearable
+          onChange={(option) => setSearchByRole(option)}
+          className="w-full max-w-xs"
+          value={searchByRole}
+          styles={customStyles}
+        />
+        <input
+          type="text"
+          placeholder="Search by name or email"
+          className="input rounded-none border-none bg-black w-full max-w-xs mr-4"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
       <div className="overflow-x-auto w-4/5 mx-auto">
-        <div className="flex items-center gap-4">
-          <Select
-            options={roleOptions}
-            placeholder="Filter by role"
-            isClearable
-            onChange={(option) => setSearchByRole(option)}
-            className="w-full max-w-xs"
-            value={searchByRole}
-            styles={customStyles}
-          />
-          <input
-            type="text"
-            placeholder="Search by name or email"
-            className="input rounded-none border-none bg-black w-full max-w-xs mr-4"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
         <table className="table text-white w-full text-xl text-left">
           <thead>
             <tr>

@@ -48,13 +48,13 @@ const BucketList = () => {
     });
   };
   return (
-    <div className="min-h-screen flex items-start py-12 justify-center bg-gradient-to-r from-primary to-gray-400">
-      <div className="wrap">
-        <h1 className="font-bold text-white mb-12 text-3xl capitalize">
+    <div className="min-h-screen flex items-start p-5 py-12 justify-center bg-gradient-to-r from-primary to-gray-400">
+      <div className="wrap w-full">
+        <h1 className="font-bold  text-white mb-5  pt-6  text-3xl capitalize">
           My Bucket List
         </h1>
-        <div className="">
-          <table className="table w-11/12 mx-auto">
+        <div className="overflow-x-auto">
+          <table className="table  lg:w-11/12 mx-auto">
             {/* head */}
             <thead>
               <tr className="text-white">

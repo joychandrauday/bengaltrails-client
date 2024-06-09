@@ -55,8 +55,8 @@ const AddPackage = () => {
         <h1 className="text-3xl font-bold text-center capitalize text-white mb-8">
           add a package
         </h1>
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full mx-auto">
-          <div className="flex gap-4 ">
+        <form onSubmit={handleSubmit(onSubmit)} className="mx-auto">
+          <div className="grid lg:grid-cols-2 grid-cols-1 gap-4 ">
             <div className="basis-1/2">
               <div className="mb-4 ">
                 <label htmlFor="packageName" className="block text-white">

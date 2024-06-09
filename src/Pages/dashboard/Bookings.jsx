@@ -73,8 +73,8 @@ const Bookings = () => {
   return (
     <div>
       <div className="min-h-screen flex items-start py-12 justify-center bg-gradient-to-r from-primary to-gray-400">
-        <div className="wrap">
-          <h1 className="font-bold text-white mb-12 text-3xl capitalize">
+        <div className="wrap w-full p-4">
+          <h1 className="font-bold text-white mb-5 pt-6 text-3xl capitalize">
             My booking List
           </h1>
           <div className="overflow-x-auto">

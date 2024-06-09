@@ -2,7 +2,7 @@ import React from "react";
 
 const PageHeader = ({ pageTitle, breadCrumbs }) => {
   return (
-    <div className="bg-primary pb-12 pt-32 flex items-center justify-center">
+    <div className="bg-primary pb-12 lg:pt-32 pt-12 flex items-center justify-center">
       <div className="wrapper">
         <h1 className="text-white font-bold capitalize text-4xl">
           {pageTitle}

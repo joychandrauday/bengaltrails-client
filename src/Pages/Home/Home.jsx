@@ -21,8 +21,8 @@ const Home = () => {
       <Helmet>
         <title>Bengal Trails: the trails must be faced.</title>
       </Helmet>
-      <div className="home-slider h-screen overflow-hidden">
-        <div className="video-container ">
+      <div className="home-slider lg:h-screen overflow-hidden">
+        <div className="video-container hidden md:hidden lg:block">
           <ReactPlayer
             url="https://www.youtube.com/watch?v=IxF55qB4CuQ"
             playing
@@ -30,12 +30,12 @@ const Home = () => {
             muted
             width="100%"
             height="116vh"
-            className="video-iframe"
+            className="video-iframe "
           />
         </div>
-        <div className="content absolute w-full top-0 min-h-screen flex items-center justify-center bg-black bg-opacity-30 text-white">
+        <div className="content lg:absolute w-full top-0 lg:min-h-screen flex items-center justify-center lg:bg-black lg:bg-opacity-30 text-white py-24">
           <div className="wrapper text-center">
-            <h1 className="text-5xl capitalize w-4/5 mx-auto font-bold">
+            <h1 className="lg:text-5xl text-3xl capitalize w-4/5 mx-auto font-bold">
               make your next tour hasselfree with us.
             </h1>
             <p className="my-4 text-[18px]">

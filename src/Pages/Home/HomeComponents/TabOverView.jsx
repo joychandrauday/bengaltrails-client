@@ -6,7 +6,7 @@ import {  FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa6
 const TabOverView = () => {
   return (
     <section className="company-overview">
-      <div className="container flex items-center gap-4">
+      <div className="container grid lg:grid-cols-2 items-center gap-4">
         <div className="basis-1/2">
           <img
             src="https://i.ibb.co/3WDShF4/Blue-Yellow-Simple-Tour-And-Travel-Logo.png"
@@ -29,15 +29,15 @@ const TabOverView = () => {
           </div>
         </div>
         <div className="basis-1/2">
-          <p className="section-description  text-left">
+          <p className="section-description text-center lg:text-left">
             Welcome to Bengal Trails, your comprehensive resource for exploring
             the wonders of Bangladesh. Our mission is to help travelers discover
             both famous landmarks and hidden gems, ensuring a rich and
             unforgettable travel experience.
           </p>
 
-          <div className="video-container ">
-            <div className="video-wrapper">
+          <div className="video-container block">
+            <div className="video-wrapper block">
               <iframe
                 src="https://www.youtube.com/embed/KwMFojLPvk0?si=SDPseCp1bwnwuYXO"
                 frameBorder="0"

@@ -26,6 +26,7 @@ import ManageGuide from "../Pages/dashboard/ManageGuide";
 import AllPackages from "../Pages/AllPackages/AllPackages";
 import MyOffer from './../Pages/dashboard/MyOffer';
 import Contact from "../Pages/Contact/Contact";
+import About from "../Pages/About us/About";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact></Contact>,
+      },
+      {
+        path: "/about-us",
+        element: <About></About>,
       },
       {
         path: "/story/:id",

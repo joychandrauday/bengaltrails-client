@@ -65,7 +65,7 @@ const MyOffer = () => {
   ];
 
   return (
-    <div className="min-h-screen w-4/5 mx-auto">
+    <div className="min-h-screen text-white mx-auto bg-primary py-8">
       {acceptedBookings.length >= 3 && <Confetti width={width} height={height} className="w-full"/>}
       <div className="container mx-auto px-4 py-12">
         <h1 className="text-2xl font-bold mb-4">My Accepted Bookings</h1>

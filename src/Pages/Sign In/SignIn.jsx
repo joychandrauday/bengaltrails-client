@@ -84,7 +84,6 @@ const SignIn = () => {
               icon: "success",
               title: "You are signed in!!",
               showConfirmButton: true,
-              r,
             });
           }
         });
@@ -116,7 +115,7 @@ const SignIn = () => {
           </div>
         ) : (
           <div className="hero-content lg:w-2/5">
-            <div className="text-center lg:text-left w-full text-white p-8 rounded">
+            <div className="text-center lg:text-left w-full text-white lg:p-8 py-12 lg:py-0 rounded">
               <h1 className="text-3xl font-bold text-center">Login now!</h1>
               <form className="" onSubmit={handleSignIn}>
                 <div className="form-control">
