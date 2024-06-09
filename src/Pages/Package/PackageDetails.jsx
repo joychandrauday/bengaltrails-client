@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
@@ -11,6 +11,7 @@ import { AuthContext } from "../../Provider/Provider";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import "../Package/style.css";
+import Confetti from "react-confetti";
 
 const PackageDetails = () => {
   const { id } = useParams();
@@ -27,6 +28,26 @@ const PackageDetails = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [bookingCount, setBookingCount] = useState(0); // State to track booking count
+
+  useEffect(() => {
+    // Fetch booking count for the current user
+    const fetchBookingCount = async () => {
+      try {
+        const res = await axiosSecure.get(`/booking/count?email=${user.email}`);
+        setBookingCount(res.data.count);
+      } catch (error) {
+        console.error("Error fetching booking count:", error);
+      }
+    };
+
+    if (user) {
+      fetchBookingCount();
+    }
+  }, [axiosSecure, user]);
+
+  // Define the congratulatory message and apply button logic
+  const showCongratulatoryMessage = bookingCount >= 3;
 
   const {
     data: packageSingle = {},
@@ -135,6 +156,7 @@ const PackageDetails = () => {
         price={price}
         type={tourType}
       />
+      {showCongratulatoryMessage && <Confetti />}
       <div className="container mx-auto px-4">
         <div className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">Gallery</h2>

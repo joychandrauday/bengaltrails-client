@@ -10,37 +10,12 @@ import TourTypesSection from "./HomeComponents/TourTypesSection";
 import TravelStoriesSection from "./HomeComponents/TravelStoriesSection";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import './styles.css'
+import "./styles.css";
 
 const Home = () => {
   const { user } = useContext(AuthContext);
 
-  // Function to show a toast notification for offer announcements
-  const showNotification = (message) => {
-    toast.info(
-      <div className="z-[999999999] ">
-        <p>{message}</p>
-        <Link to={"dashboard/my-offers"} className="text-blue-500 underline">
-          Click here for more details
-        </Link>
-      </div>,
-      {
-        position: "top-right",
-        autoClose: 100000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: false,
-      }
-    );
-  };
-
-  useEffect(() => {
-    // Simulate an offer announcement after component mount
-    showNotification("New offers available!");
-  }, []);
-
+ 
   return (
     <div className="min-h-screen">
       <Helmet>
@@ -67,11 +42,11 @@ const Home = () => {
               Your Ultimate Travel Guide to Hidden Gems and Famous Landmarks
             </p>
             <div className="">
-              <Link className="btn bg-accent text-black border-none rounded-none capitalize mx-1">
+              <Link to={'/packages'} className="btn bg-accent text-black border-none rounded-none capitalize mx-1">
                 <IoBicycleSharp className="text-xl" />
                 explore now.
               </Link>
-              <Link className="btn bg-accent text-black border-none rounded-none capitalize mx-1">
+              <Link to={'/contact'} className="btn bg-accent text-black border-none rounded-none capitalize mx-1">
                 <RiChatQuoteFill className="text-xl" />
                 get a quote
               </Link>
