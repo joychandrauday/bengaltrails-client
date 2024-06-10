@@ -12,7 +12,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import axios from "axios";
-import useAxiosPublic from "../Hooks/useAxiosPublic copy";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 
 const auth = getAuth(app);
 export const AuthContext = createContext(null);
@@ -34,19 +34,19 @@ const Provider = ({ children }) => {
       photoURL: `${photoURL}`,
     });
   };
+
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      const userEmail= currentUser?.email
       if (currentUser) {
-        //
-        const userInfo = { email: currentUser.email };
+        const userInfo = { email: userEmail };
         axiosPublic.post("/jwt", userInfo).then((res) => {
           if (res.data.token) {
             localStorage.setItem("access-token", res.data.token);
           }
         });
       } else {
-        //
         localStorage.removeItem('access-token')
       }
       setLoading(false);
@@ -55,6 +55,7 @@ const Provider = ({ children }) => {
       unSubscribe();
     };
   }, [axiosPublic]);
+
   const signInUser = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);

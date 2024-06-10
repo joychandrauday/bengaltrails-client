@@ -11,7 +11,7 @@ import { AwesomeButton } from "react-awesome-button";
 
 import "react-awesome-button/dist/styles.css";
 import { BsGoogle } from "react-icons/bs";
-import useAxiosPublic from "../../Hooks/useAxiosPublic copy";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const SignIn = () => {
   const location = useLocation();
@@ -39,13 +39,13 @@ const SignIn = () => {
         const user = userCredential.user;
         if (user) {
           navigate(location?.state ? location.state : "/");
-          const user = { email: email };
-          axiosPublic.post("/jwt", user).then((res) => {
+          // const user = { email: email };
+          // axiosPublic.post("/jwt", user).then((res) => {
             
-            if (res.data.token) {
-              localStorage.setItem("access-token", res.data.token);
-            }
-          });
+          //   if (res.data.token) {
+          //     localStorage.setItem("access-token", res.data.token);
+          //   }
+          // });
           Swal.fire({
             position: "center",
             icon: "success",

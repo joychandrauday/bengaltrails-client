@@ -111,7 +111,7 @@ const AllUsers = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure
-          .patch(`users/${id}`,{
+          .patch(`/users/${id}`,{
             role:'admin',
             guide:'none',
             reqGuide: false
@@ -155,7 +155,7 @@ const AllUsers = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure
-          .patch(`users/${id}`,{
+          .patch(`/users/${id}`,{
             role:'guide',
             guide:'approved',
             reqGuide: true

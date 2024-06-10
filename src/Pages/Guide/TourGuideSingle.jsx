@@ -34,12 +34,12 @@ const TourGuideSingle = () => {
       fetchGuideDetails();
     }
   }, [guideId]);
-
+  
   const onSubmit = async (data) => {
     try {
       data.rating = rating;
       data.userName = user.displayName; // Replace with actual user name
-      data.userImage = user.photoUrl; // Replace with actual user image URL
+      data.userImage = user.photoURL; // Replace with actual user image URL
       const response = await axiosSecure.post(`/guide/${guideId}/reviews`, data);
       if (response.data.success) {
         Swal.fire({

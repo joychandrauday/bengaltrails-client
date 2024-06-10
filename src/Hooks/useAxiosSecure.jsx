@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/Provider";
 
 export const axiosSecure = axios.create({
-  baseURL: "https://bengaltrails-server.vercel.app/",
+  baseURL: "https://bengaltrails-server.vercel.app",
 });
 
 const useAxiosSecure = () => {

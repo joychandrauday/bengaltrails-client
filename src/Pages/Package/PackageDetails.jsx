@@ -68,8 +68,6 @@ const PackageDetails = () => {
     },
   });
 
-  
-
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -99,11 +97,7 @@ const PackageDetails = () => {
     caption: "Image Caption Here",
   }));
 
-  
-
   const onSubmit = async (data) => {
-    
-
     // Simulate a successful form submission to the server
     // You can replace this with your actual API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -154,7 +148,7 @@ const PackageDetails = () => {
         type={tourType}
       />
       {showCongratulatoryMessage && <Confetti />}
-      <div className="container mx-auto px-4">
+      <div className="container pt-12 mx-auto px-4">
         <div className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">Gallery</h2>
           <Gallery images={images} />
@@ -163,12 +157,29 @@ const PackageDetails = () => {
           <h2 className="text-2xl font-semibold mb-4">About the Tour</h2>
           <p>{aboutTour}</p>
         </div>
-        <div className="mb-8">
+        <div className="mb-8 py-8">
           <h2 className="text-2xl font-semibold mb-4">Tour Plan</h2>
-          <ul>
+          <ul className="timeline timeline-start timeline-vertical">
             {tourPlan.map((plan, index) => (
               <li key={index} className="mb-2">
-                <strong>Day {plan.day}:</strong> {plan.activities}
+                <div className="timeline-middle">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div className="timeline-start timeline-box text-xl">
+                <span className="bg-primary rounded text-white p-2">{plan.day}:</span> {plan.activities}
+                </div>
+                <hr />
               </li>
             ))}
           </ul>
@@ -319,11 +330,7 @@ const PackageDetails = () => {
               )}
             </div>
             {/* Add hidden input for status */}
-            <input
-              type="hidden"
-              value="pending"
-              {...register("status")}
-            />
+            <input type="hidden" value="pending" {...register("status")} />
             <button
               type="submit"
               className="btn btn-primary w-full bg-primary rounded-none border-none text-white"

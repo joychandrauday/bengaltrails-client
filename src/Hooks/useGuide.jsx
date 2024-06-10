@@ -8,7 +8,7 @@ const useAdmin = () => {
   const axiosSecure = useAxiosSecure();
   const { data: isGuide,isPending: isGuideLoading } = useQuery({
     queryKey: [user?.email, "isGuide"],
-    enabled: !loading,
+    enabled: !loading && !!localStorage.getItem('access-token'),
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/guide/${user.email}`);
       

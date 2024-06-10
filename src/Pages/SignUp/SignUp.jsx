@@ -8,7 +8,7 @@ import { FaEye } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import useAxiosPublic from './../../Hooks/useAxiosPublic copy';
+import useAxiosPublic from './../../Hooks/useAxiosPublic';
 
 const auth = getAuth(app);
 const SignUp = () => {
