@@ -20,7 +20,6 @@ server repossitory [bengal trails](https://github.com/joychandrauday/bengaltrail
 ## Admin Access
 - Librarian Email: admin@gmail.com
 - Password: Aaaaaa
-- Or, visit [Register as a librarian](https://bookersden.web.app/librarian-registration) for librarian access.
 
 ## License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
